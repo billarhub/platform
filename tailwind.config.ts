@@ -14,8 +14,6 @@ const config: Config = {
         white: "#fff",
         light: "",
         dark: '#313131',
-        "soft-green": "#E2FFF2",
-        "midnight-slate": '#28293D'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

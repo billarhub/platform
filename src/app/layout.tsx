@@ -18,7 +18,6 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  unstable_setRequestLocale('es');
   const messages = useMessages();
   return (
     <html lang={locale}>

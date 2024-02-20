@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import { useMenuGroupOptions } from '@/hooks/useMenuGroupOptions';
 import Link from 'next/link';
+import LocaleSwitcher from '../common/LocaleSwitcher';
 
 function AuthButtonGroup() {
   const t = useTranslations('AuthButtonGroup');
@@ -24,6 +25,7 @@ function AuthButtonGroup() {
             {item.text}
           </Link>
         ))}
+      <LocaleSwitcher />
     </div>
   );
 }

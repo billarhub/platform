@@ -1,5 +1,9 @@
+import React from 'react';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import FooterLogo from '@/components/common/FooterLogo';
 import Header from '@/components/common/Header';
+
 
 export default function ContentLayout({
   children,
@@ -8,12 +12,16 @@ export default function ContentLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
+  const messages = useMessages();
   return (
-    <section>
-      <Header locale={locale} />
+    <NextIntlClientProvider messages={messages}>
+      <section>
+        <Header locale={locale} />
 
-      {children}
-      <FooterLogo />
-    </section>
+        {children}
+        <FooterLogo />
+      </section>
+    </NextIntlClientProvider>
   );
 }

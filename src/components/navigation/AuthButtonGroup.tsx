@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { useMenuGroupOptions } from '@/hooks/useMenuGroupOptions';
@@ -11,6 +12,7 @@ function AuthButtonGroup() {
 
   return (
     <div className="hidden md:flex h-full">
+      <LocaleSwitcher />
       {menuItemsOptions
         .filter(
           (item) =>
@@ -25,7 +27,6 @@ function AuthButtonGroup() {
             {item.text}
           </Link>
         ))}
-      <LocaleSwitcher />
     </div>
   );
 }

@@ -1,0 +1,41 @@
+{
+  "Index": {
+    "title": "BillardHub",
+    "login": "Login"
+  },
+  "NavButtonGroup": {
+    "home": "Home",
+    "tournaments": "Tournaments",
+    "players": "Players",
+    "clubs": "Club"
+  },
+  "AuthButtonGroup": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "Route": {
+    "home": "Home",
+    "tournaments": "Tournaments",
+    "players": "Players",
+    "clubs": "Club",
+    "login": "Login",
+    "register": "Register"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "message": "This page could not be found.",
+    "back": "Back to home"
+  },
+  "Login": {
+    "title": "Login",
+    "name": "Username",
+    "password": "Password",
+    "submit": "Submit",
+    "register": "Don't have an account? Register"
+  },
+  "Common": {
+    "invalidEmail": "Please enter a valid email",
+    "passwordMinLength": "Password must be at least 8 characters long",
+    "nameMinLength": "Username must be at least 3 characters"
+  }
+}

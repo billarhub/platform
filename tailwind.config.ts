@@ -9,13 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: "#F26223",
+        primary: {
+          100: "#FFE5E1",
+          200: "#FFC4B3",
+          300: "#FFA385",
+          400: "#FF8257",
+          500: "#FF6129",
+          600: "#F26223",
+          700: "#E5631D",
+          800: "#D86417",
+          900: "#CB6511",
+        },
         secondary: "#1A1C20",
         white: "#fff",
         light: "",
         dark: '#313131',
-        "soft-green": "#E2FFF2",
-        "midnight-slate": '#28293D'
+        // lightGray: '#D9D9D9',
+        lightGray: {
+          100: '#F5F5F5',
+          200: '#E5E5E5',
+          300: '#D9D9D9', // Your original color
+          400: '#CDCDCD',
+          500: '#B1B1B1',
+          600: '#959595',
+          700: '#797979',
+          800: '#5D5D5D',
+          900: '#414141',
+        },
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import BillarHubLogo from '../../../public/image/billarhub_logo.png';
+import BillarHubLogo from '../../../public/image/LOGO_SVG.svg';
 import NavButtonGroup from '../navigation/NavButtonGroup';
 import AuthButtonGroup from '../navigation/AuthButtonGroup';
 import MenuGroup from '../navigation/MenuGroup';
@@ -12,7 +12,7 @@ interface IHeaderProps {
 function Header({ locale }: IHeaderProps) {
   return (
     <header className="flex justify-between items-center w-full bg-white px-5 py-2">
-      <Image src={BillarHubLogo} alt="Billarhub Platform" placeholder="blur" />
+      <Image src={BillarHubLogo} alt="Billarhub Platform" width={198} height={36} />
       <NavButtonGroup />
       <AuthButtonGroup />
       <MenuGroup locale={locale} />

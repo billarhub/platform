@@ -27,7 +27,7 @@ function LoginForm() {
   };
   return (
     <div className="w-screen md:w-full h-full flex justify-center items-center p-4 md:p-0">
-      <Card className="rounded-[80px] md:h-auto md:w-[687px]">
+      <Card className="rounded-xl md:h-auto md:w-[687px]">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-center items-center px-6 py-10 md:px-24 md:py-16 gap-5 text-black"
@@ -40,7 +40,7 @@ function LoginForm() {
             {...register('name')}
             name="name"
             className="w-full"
-            inputClassName="placeholder:font-thin uppercase"
+            inputClassName="placeholder:font-base uppercase"
             leftIcon={<UserIcon className="w-8 h-8 rounded-md" />}
             error={errors?.name?.message}
           />
@@ -50,7 +50,7 @@ function LoginForm() {
             name="password"
             className="w-full"
             type="password"
-            inputClassName="placeholder:font-thin uppercase"
+            inputClassName="placeholder:font-base uppercase"
             leftIcon={<PasswordIcon className="w-8 h-8 rounded-md" />}
             error={errors?.password?.message}
           />

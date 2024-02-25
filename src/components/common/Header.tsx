@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import BillarHubLogo from '../../../public/image/LOGO_SVG.svg';
+import BillarHubLogo from '../../../public/image/logo_svg.svg';
 import NavButtonGroup from '../navigation/NavButtonGroup';
 import AuthButtonGroup from '../navigation/AuthButtonGroup';
 import MenuGroup from '../navigation/MenuGroup';

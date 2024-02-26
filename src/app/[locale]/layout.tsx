@@ -4,7 +4,6 @@ import { unstable_setRequestLocale } from 'next-intl/server';
 import FooterLogo from '@/components/common/FooterLogo';
 import Header from '@/components/common/Header';
 
-
 export default function ContentLayout({
   children,
   params: { locale },
@@ -16,10 +15,13 @@ export default function ContentLayout({
   const messages = useMessages();
   return (
     <NextIntlClientProvider messages={messages}>
-      <section>
+      <section className="flex flex-col min-h-screen">
         <Header locale={locale} />
 
-        {children}
+        <main className="flex-grow overflow-auto">
+          <div className="flex flex-col h-full">{children}</div>
+        </main>
+
         <FooterLogo />
       </section>
     </NextIntlClientProvider>

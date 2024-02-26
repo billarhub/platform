@@ -14,3 +14,19 @@ export interface ILoginPayload {
     name: string;
     password: string;
 }
+
+export interface ITournamentConfiguration {
+    name: string;
+    players: number;
+    place: string;
+    startDate: string;
+    endDate: string;
+    playerMode: string;
+    gameMode: string;
+    tournamentType: string;
+    sets: number;
+    finalSet: number;
+    emailNotificacion: boolean;
+    access: string;
+    tournamentValue: string;
+}

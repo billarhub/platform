@@ -36,6 +36,31 @@
   "Common": {
     "invalidEmail": "Please enter a valid email",
     "passwordMinLength": "Password must be at least 8 characters long",
-    "nameMinLength": "Username must be at least 3 characters"
+    "nameMinLength": "Username must be at least 3 characters",
+    "saveAndFollow": "Save and continue",
+    "erase": "Erase",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "Tournament": {
+    "title": "Tournament creator",
+    "configuration": "Configuration",
+    "players": "Players",
+    "confirmation": "Confirmation",
+    "draw": "Draw",
+    "TournamentName": "Tournament name",
+    "playersNumber": "Number of players",
+    "place": "Place",
+    "startDate": "Start date (dd/mm/yyyy)             ",
+    "endDate": "End date (dd/mm/yyyy)               ",
+    "playerMode": "Player mode",
+    "gameMode": "Game mode",
+    "tournamentType": "Tournament type",
+    "sets": "Sets per table",
+    "finalSet": "Final set",
+    "emailReminder": "email reminder to registrants",
+    "access": "Access",
+    "public": "Public",
+    "private": "Private"
   }
 }

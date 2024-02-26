@@ -12,7 +12,9 @@ interface IHeaderProps {
 function Header({ locale }: IHeaderProps) {
   return (
     <header className="flex justify-between items-center w-full bg-white px-5 py-2">
-      <Image src={BillarHubLogo} alt="Billarhub Platform" width={198} height={36} />
+      <div className="relative w-[198px] h-[36px]">
+      <Image src={BillarHubLogo} alt="Billarhub Platform" fill />
+      </div>
       <NavButtonGroup />
       <AuthButtonGroup />
       <MenuGroup locale={locale} />

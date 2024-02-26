@@ -15,15 +15,13 @@ export default function ContentLayout({
   const messages = useMessages();
   return (
     <NextIntlClientProvider messages={messages}>
-      <section className="flex flex-col min-h-screen">
-        <Header locale={locale} />
+      <Header locale={locale} />
 
-        <main className="flex-grow overflow-auto">
-          <div className="flex flex-col h-full">{children}</div>
-        </main>
+      <main className="flex-grow ">
+        <div className="flex flex-col h-full">{children}</div>
+      </main>
 
-        <FooterLogo />
-      </section>
+      <FooterLogo />
     </NextIntlClientProvider>
   );
 }

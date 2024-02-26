@@ -40,7 +40,7 @@ function TournamentCreateForm() {
   ];
 
   return (
-    <div className="flex flex-grow flex-col justify-center items-center w-full h-screen">
+    <div className="flex flex-grow flex-col justify-center items-center w-full">
       <h1 className="pb-5 md:pb-12 font-bold uppercase md:text-4xl text-lg mt-10 md:mt-28">
         {tournmaentTranslation('title')}
       </h1>

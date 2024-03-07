@@ -81,7 +81,7 @@ export const tableDataExample = {
     ],
     "pageInfo": {
         "currentPage": 1,
-        "perPage": 3,
+        "perPage": 7,
         "pageCount": 3,
         "itemCount": 7,
         "hasNextPage": true,

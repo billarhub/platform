@@ -80,11 +80,11 @@ export default function TablePagination({
   if (table?.getRowModel().rows.length === 0) return null;
 
   return (
-    <div className={`py-2 ${className}`} {...props}>
+    <div className={`py-2 flex justify-end items-center ${className}`} {...props}>
       <nav className="block">
-        <ul className="flex pl-0 rounded list-none flex-wrap items-center">
+        <ul className="flex pl-0 rounded list-none flex-wrap items-center text-slate-500">
           {table?.options.manualPagination ? (
-            <li className="text-gray-300">
+            <li className="text-slate-500">
               {paginationRange?.current} al {paginationRange?.limit} de{' '}
               {paginationRange?.total}
             </li>

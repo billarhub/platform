@@ -10,7 +10,7 @@ interface IPlayerTableProps {
 function PlayerTable({ handleGoToPage, columns }: IPlayerTableProps) {
   return (
     <div className='w-full'>
-      <Table data={tableDataExample.items} columns={columns}>
+      <Table data={tableDataExample.items} columns={columns} manualPagination>
         <Table.TableContent />
         <Table.TableFooter />
         <Table.TablePagination

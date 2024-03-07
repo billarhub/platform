@@ -77,7 +77,7 @@ function TournamentAddPlayer({
     >
       <Accordion
         defaultOpen
-        className="flex flex-col flex-wrap w-full bg-white rounded-md mx-auto px-6 pt-4 pb-8 mt-10"
+        className="flex flex-col flex-wrap w-full bg-white rounded-md mx-auto my-10"
       >
         {({ open }) => (
           <>
@@ -155,7 +155,7 @@ function TournamentAddPlayer({
                     </InputSubtitle>
                   </div>
 
-                  <div className="w-full p-4 flex justify-end items-center">
+                  <div className="w-full py-10 flex justify-end items-center">
                     <Button
                       className="w-full lg:w-auto"
                       type="button"

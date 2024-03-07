@@ -6,6 +6,7 @@ interface InputSubtitleProps {
   subtitleClassName?: string;
   className?: string;
   subtitle?: string;
+  descriptionSubtitle?: string;
 }
 
 function InputSubtitle({
@@ -13,6 +14,7 @@ function InputSubtitle({
   subtitleClassName,
   className,
   subtitle,
+  descriptionSubtitle,
 }: InputSubtitleProps): JSX.Element {
   return (
     <div className={cn('flex flex-col gap-2 w-full', className)}>
@@ -23,6 +25,12 @@ function InputSubtitle({
         )}
       >
         {subtitle}
+        {' '}
+        {descriptionSubtitle && (
+          <span className="text-black font-normal text-xs uppercase">
+            {descriptionSubtitle}
+          </span>
+        )}
       </h1>
       {children}
     </div>

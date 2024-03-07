@@ -1,10 +1,10 @@
-'use client';
 import React from 'react';
 import { Tab } from '@headlessui/react';
 import { cn } from '@/lib/cn';
+import { Steps } from '@/models';
 
 type TournamentTabProps = {
-  options: string[];
+  steps: Steps[];
   panels: React.ReactNode[];
   ariaLabel: string;
   selectedIndex: number;
@@ -12,7 +12,7 @@ type TournamentTabProps = {
 };
 
 const TournamentTab: React.FC<TournamentTabProps> = ({
-  options,
+  steps,
   panels,
   ariaLabel,
   selectedIndex,
@@ -20,25 +20,35 @@ const TournamentTab: React.FC<TournamentTabProps> = ({
 }) => (
   <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
     <Tab.List
-      className="flex rounded-t-xl bg-tabBackground w-[1053px] md:w-full"
+      className="flex rounded-t-xl bg-tabBackground w-[1053px] md:w-3/4 justify-center items-center"
       aria-label={ariaLabel}
     >
-      {options.map((tab, index) => (
-        <div key={tab} className="flex w-full items-center">
-          <Tab
-            className={({ selected }) =>
-              cn(
-                'border-b-[3px] flex justify-center items-center w-full focus:outline-none font-bold text-black text-lg uppercase min-h-[84px]',
-                !selected ? ' border-tabBorderBottom' : 'border-primary-600'
-              )
-            }
-          >
-            {tab}
-          </Tab>
-          {index < options.length - 1 && (
-            <div className="border-r-[3px] h-5 w-px border-lightGray-400" />
-          )}
-        </div>
+      {steps.map((step, index) => (
+        <Tab
+          key={step.label}
+          className={({ selected }) =>
+            cn(
+              'flex max-w-[150px] items-center min-h-max',
+              selected ? 'text-primary' : 'text-stepperText'
+            )
+          }
+        >
+          <div className="flex flex-col items-center mr-2">
+            <div
+              className={`w-1.5 h-1.5 rounded-full ${
+                index < selectedIndex ? 'bg-primary' : 'bg-stepperText'
+              }`}
+            />
+            {index < steps.length - 1 && (
+              <div
+                className={`w-px h-20 ml-4 ${
+                  index < selectedIndex ? 'bg-primary' : 'bg-stepperText'
+                }`}
+              />
+            )}
+          </div>
+          <div className="text-lg text-left font-medium">{step.label}</div>
+        </Tab>
       ))}
     </Tab.List>
     <Tab.Panels className="mt-2">

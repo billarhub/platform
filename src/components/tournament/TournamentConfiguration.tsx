@@ -54,27 +54,27 @@ function TournamentConfiguration({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="px-16 py-5 flex flex-col gap-4"
+      className="py-5 flex flex-col gap-4"
     >
       <InputSubtitle subtitle={tournmaentTranslation('TournamentName')}>
         <Input
           {...register('name')}
           name="name"
-          className="w-full md:w-3/4"
+          className="w-full"
           inputClassName="placeholder:font-base uppercase"
           error={errors?.name?.message}
         />
       </InputSubtitle>
 
-      <div className="flex flex-col md:flex-row justify-start items-center md:gap-10">
+      <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
         <InputSubtitle
-          className="w-fit"
+          className="w-full"
           subtitle={tournmaentTranslation('playersNumber')}
         >
           <Input
             {...register('players')}
             name="players"
-            className="w-4/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.players?.message}
             type="number"
@@ -82,7 +82,7 @@ function TournamentConfiguration({
           />
         </InputSubtitle>
         <InputSubtitle
-          className="w-auto"
+          className="w-full"
           subtitle={tournmaentTranslation('place')}
         >
           <Input
@@ -94,23 +94,23 @@ function TournamentConfiguration({
           />
         </InputSubtitle>
       </div>
-      <div className="flex flex-col md:flex-row justify-start items-center md:gap-10">
+      <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
         <InputSubtitle
-          className="w-fit"
+          className="w-full"
           subtitleClassName="whitespace-pre"
           subtitle={tournmaentTranslation('startDate')}
         >
           <Input
             {...register('startDate')}
             name="startDate"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.startDate?.message}
             type="date"
           />
         </InputSubtitle>
         <InputSubtitle
-          className="w-fit"
+          className="w-full"
           subtitleClassName="whitespace-pre"
           subtitle={tournmaentTranslation('endDate')}
         >
@@ -118,60 +118,60 @@ function TournamentConfiguration({
             placeholder={tournmaentTranslation('TournamentName')}
             {...register('endDate')}
             name="endDate"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.endDate?.message}
             type="date"
           />
         </InputSubtitle>
       </div>
-      <div className="flex flex-col md:flex-row justify-start items-center md:gap-10">
+      <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
         <InputSubtitle
-          className="w-fit"
+          className="w-full"
           subtitle={tournmaentTranslation('playerMode')}
         >
           <Input
             {...register('playerMode')}
             name="playerMode"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.playerMode?.message}
           />
         </InputSubtitle>
         <InputSubtitle
-          className="w-auto"
+          className="w-full"
           subtitle={tournmaentTranslation('gameMode')}
         >
           <Input
             {...register('gameMode')}
             name="gameMode"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.gameMode?.message}
           />
         </InputSubtitle>
       </div>
-      <div className="flex flex-col md:flex-row justify-start items-center md:gap-10">
+      <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
         <InputSubtitle
-          className="w-fit"
+          className="w-full"
           subtitle={tournmaentTranslation('tournamentType')}
         >
           <Input
             {...register('tournamentType')}
             name="tournamentType"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.tournamentType?.message}
           />
         </InputSubtitle>
         <InputSubtitle
-          className="w-fit"
+          className="w-full"
           subtitle={tournmaentTranslation('sets')}
         >
           <Input
             {...register('sets')}
             name="sets"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.sets?.message}
             type="number"
@@ -179,13 +179,13 @@ function TournamentConfiguration({
           />
         </InputSubtitle>
         <InputSubtitle
-          className="w-auto"
+          className="w-full"
           subtitle={tournmaentTranslation('finalSet')}
         >
           <Input
             {...register('finalSet')}
             name="finalSet"
-            className="w-full md:w-7/12"
+            className="w-full"
             inputClassName="placeholder:font-base uppercase"
             error={errors?.finalSet?.message}
             type="number"
@@ -207,20 +207,37 @@ function TournamentConfiguration({
         options={accessOptions}
         error={errors?.access}
       />
-      <div className="flex justify-end items-center gap-5">
+      <InputSubtitle
+        className="w-full"
+        subtitle={tournmaentTranslation('tournamentValue')}
+        descriptionSubtitle={tournmaentTranslation('tournamentValueDescription')}
+      >
+        <Input
+          {...register('tournamentValue')}
+          name="tournamentValue"
+          className="w-full"
+          inputClassName="placeholder:font-base uppercase"
+          error={errors?.tournamentValue?.message}
+          leftIcon="$"
+          type="number"
+          min="0"
+        />
+      </InputSubtitle>
+      <div className="flex flex-col lg:flex-row justify-between items-center gap-5 py-10">
         <Button
+          onClick={resetForm}
+          className="w-full md:w-auto bg-deleteButtonBackground text-deleteButtonText hover:bg-deleteButtonBackground/80 duration-150 ease-in-out focus:bg-deleteButtonBackground"
+        >
+          {commonTranslations('erase')}
+        </Button>
+        <Button
+          className="w-full md:w-auto"
           type="submit"
           // onClick={() => {
           //   setSelectedIndex(1);
           // }}
         >
           {commonTranslations('saveAndFollow')}
-        </Button>
-        <Button
-          onClick={resetForm}
-          className="bg-deleteButtonBackground text-deleteButtonText hover:bg-deleteButtonBackground/80 duration-150 ease-in-out focus:bg-deleteButtonBackground"
-        >
-          {commonTranslations('erase')}
         </Button>
       </div>
     </form>

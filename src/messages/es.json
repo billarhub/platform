@@ -61,6 +61,8 @@
     "emailReminder": "recordatorio de correo electrónico a inscritos",
     "access": "Acceso",
     "public": "Público",
-    "private": "Privado"
+    "private": "Privado",
+    "tournamentValue": "Valor del torneo",
+    "tournamentValueDescription": "(ingresar valor en usd)"
   }
 }

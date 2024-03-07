@@ -33,7 +33,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div className="relative w-full">
           <div className="flex flex-col">
             <div className="flex flex-row items-center gap-2 border-2 px-3 py-1 sm:px-[14px] sm:py-2 border-lightGray-300 rounded-lg hover:border-darkGray focus-within:border-primary-600 focus-within:border-2">
-              {leftIcon}
+              <span className='text-black'>{leftIcon}</span>
               <input
                 className={cn(
                   'w-full border-0 p-0 focus:ring-0 text-black text-sm sm:text-base bg-transparent outline-none focus:outline-none focus:shadow-none placeholder:text-lightGray-600 tracking-wider placeholder:text-xs placeholder:sm:text-sm',

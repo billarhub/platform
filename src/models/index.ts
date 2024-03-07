@@ -1,3 +1,32 @@
+export type Pagination = {
+    count: number;
+    pageInfo: {
+        currentPage: number;
+        perPage: number;
+        itemCount: number;
+        pageCount: number;
+        hasPreviousPage: boolean;
+        hasNextPage: boolean;
+    };
+};
+
+export type Steps = {
+    label: string
+    component?: React.ReactNode
+    icon: React.ComponentType<{ className?: string }>;
+}
+
+export type Player = {
+    firstName: string;
+    lastName: string;
+    location: string;
+    email: string;
+    phone: string;
+    active: boolean;
+    _id: string;
+    createdAt: string;
+    updatedAt: string;
+  };
 export interface IRoute {
     text: string;
     href: string;

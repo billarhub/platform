@@ -39,6 +39,11 @@ const config: Config = {
         tabBackground: "#F1F1F1",
         deleteButtonBackground: "#D9D9D9",
         deleteButtonText: "#979797",
+        table: {
+          headers: '#646262',
+          headerBackground: '#A6A6A6',
+        },
+        stepperText: '#2C2B2B',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

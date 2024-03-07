@@ -40,7 +40,14 @@
     "saveAndFollow": "Save and continue",
     "erase": "Erase",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "addPlayer": "Add Player",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "active": "Active"
   },
   "Tournament": {
     "title": "Tournament creator",

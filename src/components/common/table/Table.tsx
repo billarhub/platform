@@ -93,7 +93,9 @@ interface TableProps<T> {
 }
 
 export function useTable<T>() {
-  const { hook } = React.useContext(TableContext as React.Context<TTableContext<T>>);
+  const { hook } = React.useContext(
+    TableContext as React.Context<TTableContext<T>>
+  );
   return hook;
 }
 

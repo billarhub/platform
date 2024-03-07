@@ -59,3 +59,12 @@ export interface ITournamentConfiguration {
     access: string;
     tournamentValue: string;
 }
+
+export interface ITournamentAddPlayer {
+    firstName: string;
+    lastName: string;
+    location: string;
+    email: string;
+    phone: string;
+    active: boolean;
+}

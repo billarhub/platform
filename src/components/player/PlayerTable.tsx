@@ -9,14 +9,16 @@ interface IPlayerTableProps {
 
 function PlayerTable({ handleGoToPage, columns }: IPlayerTableProps) {
   return (
-    <Table data={tableDataExample.items} columns={columns}>
-      <Table.TableContent />
-      <Table.TableFooter />
-      <Table.TablePagination
-        paginationInfo={tableDataExample}
-        handleGoToPage={handleGoToPage}
-      />
-    </Table>
+    <div className='w-full'>
+      <Table data={tableDataExample.items} columns={columns}>
+        <Table.TableContent />
+        <Table.TableFooter />
+        <Table.TablePagination
+          paginationInfo={tableDataExample}
+          handleGoToPage={handleGoToPage}
+        />
+      </Table>
+    </div>
   );
 }
 

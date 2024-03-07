@@ -40,7 +40,14 @@
     "saveAndFollow": "Guardar y seguir",
     "erase": "Borrar",
     "yes": "Sí",
-    "no": "No"
+    "no": "No",
+    "addPlayer": "Agregar Jugador",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "location": "Ubicación",
+    "active": "Activo"
   },
   "Tournament": {
     "title": "Creador de torneo",

@@ -3,27 +3,41 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Player } from '@/models';
+import { ITournamentAddPlayer, Player } from '@/models';
 import TournamentConfiguration from './TournamentConfiguration';
-import PlayerTable from '../player/PlayerTable';
 import Stepper from '../common/Stepper';
 import BallEightIcon from '../icon/BallEightIcon';
 import PencilIcon from '../icon/PencilIcon';
 import UserGroupIcon from '../icon/UserGroupIcon';
 import CheckCircleIcon from '../icon/CheckCircleIcon';
+import TournamentAddPlayer from './TournamentAddPlayer';
+import {
+  createTournamentConfigSchema,
+  createTournamentPlayerSchema,
+} from '@/lib/schemas/tournamentSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 function TournamentCreateForm() {
   const tournmaentTranslation = useTranslations('Tournament');
+  const commonTranslation = useTranslations('Common');
+  const tournamentConfigSchema =
+    createTournamentConfigSchema(commonTranslation);
+  const tournamentPlayerSchema =
+    createTournamentPlayerSchema(commonTranslation);
+  const validationSchema = [tournamentConfigSchema, tournamentPlayerSchema];
   const [pagination, setPagination] = React.useState({
     currentPage: 1,
     perPage: 10,
   });
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [players, setPlayers] = React.useState<ITournamentAddPlayer[]>([]);
   const form = useForm({
+    resolver: zodResolver(validationSchema[selectedIndex]),
     defaultValues: {
       players: 0,
       sets: 0,
       finalSet: 0,
+      phone: '',
     },
   });
 
@@ -78,9 +92,11 @@ function TournamentCreateForm() {
       label: tournmaentTranslation('players'),
       icon: UserGroupIcon,
       component: (
-        <PlayerTable
+        <TournamentAddPlayer
           handleGoToPage={handleGoToPage}
           columns={columns}
+          players={players}
+          setPlayers={setPlayers}
           key="players"
         />
       ),
@@ -106,7 +122,7 @@ function TournamentCreateForm() {
   ];
 
   return (
-    <div className="mt-40 md:h-auto w-auto min-h-[1222px] bg-white flex gap-10 justify-stretch items-center">
+    <div className="mt-40 w-auto min-h-[1222px] bg-white flex gap-10 justify-stretch items-start md:items-center">
       <FormProvider {...form}>
         <Stepper
           selectedIndex={selectedIndex}

@@ -226,12 +226,12 @@ function TournamentConfiguration({
       <div className="flex flex-col lg:flex-row justify-between items-center gap-5 py-10">
         <Button
           onClick={resetForm}
-          className="w-full md:w-auto bg-deleteButtonBackground text-deleteButtonText hover:bg-deleteButtonBackground/80 duration-150 ease-in-out focus:bg-deleteButtonBackground"
+          className="w-full lg:w-auto bg-deleteButtonBackground text-deleteButtonText hover:bg-deleteButtonBackground/80 duration-150 ease-in-out focus:bg-deleteButtonBackground"
         >
           {commonTranslations('erase')}
         </Button>
         <Button
-          className="w-full md:w-auto"
+          className="w-full lg:w-auto"
           type="submit"
           // onClick={() => {
           //   setSelectedIndex(1);

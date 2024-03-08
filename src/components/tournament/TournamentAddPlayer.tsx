@@ -11,12 +11,15 @@ import InputSubtitle from '../common/InputSubtitle';
 import { PhoneInputModel } from '../common/PhoneInput';
 import ControlledPhoneInput from '../common/controlled/ControlledPhoneInput';
 import { Transition } from '@headlessui/react';
+import LeftArrowIcon from '../icon/LeftArrowIcon';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
   columns: any;
   players: ITournamentAddPlayer[];
   setPlayers: React.Dispatch<React.SetStateAction<ITournamentAddPlayer[]>>;
+  goNext: () => void;
+  goBack: () => void;
 }
 
 function TournamentAddPlayer({
@@ -24,6 +27,8 @@ function TournamentAddPlayer({
   columns,
   players,
   setPlayers,
+  goNext,
+  goBack,
 }: IPlayerTableProps) {
   const t = useTranslations('Common');
   const {
@@ -68,6 +73,7 @@ function TournamentAddPlayer({
 
   const onSubmit = () => {
     console.log(players);
+    goNext();
   };
 
   return (
@@ -170,15 +176,24 @@ function TournamentAddPlayer({
           </>
         )}
       </Accordion>
-      <PlayerTable data={players} handleGoToPage={handleGoToPage} columns={columns} />
+      <PlayerTable
+        data={players}
+        handleGoToPage={handleGoToPage}
+        columns={columns}
+      />
       <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-5 py-10">
-        <Button
-          onClick={deleteAllPlayers}
-          type="button"
-          className="w-full lg:w-auto bg-deleteButtonBackground text-deleteButtonText hover:bg-deleteButtonBackground/80 duration-150 ease-in-out focus:bg-deleteButtonBackground"
-        >
-          {t('erase')}
-        </Button>
+        <div className="flex justify-between items-center gap-2">
+          <Button className="w-10 h-10 lg:w-auto bg-black hover:bg-black/80 focus:bg-black" onClick={goBack}>
+            <LeftArrowIcon className="w-6 h-6 text-white font-bold" />
+          </Button>
+          <Button
+            onClick={deleteAllPlayers}
+            type="button"
+            className="w-full lg:w-auto bg-deleteButtonBackground text-deleteButtonText hover:bg-deleteButtonBackground/80 duration-150 ease-in-out focus:bg-deleteButtonBackground"
+          >
+            {t('erase')}
+          </Button>
+        </div>
         <Button className="w-full lg:w-auto" type="button" onClick={onSubmit}>
           {t('saveAndFollow')}
         </Button>

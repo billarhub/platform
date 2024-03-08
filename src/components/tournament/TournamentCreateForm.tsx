@@ -44,6 +44,18 @@ function TournamentCreateForm() {
     },
   });
 
+  const goNext = () => {
+    if (selectedIndex < steps.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+    }
+  };
+
+  const goBack = () => {
+    if (selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+    }
+  };
+
   const deletePlayer = (player: Player) => {
     setPlayers((prevPlayers) => prevPlayers.filter((p) => p !== player));
   };
@@ -100,6 +112,7 @@ function TournamentCreateForm() {
         <TournamentConfiguration
           setSelectedIndex={setSelectedIndex}
           key="configuration"
+          goNext={goNext}
         />
       ),
     },
@@ -113,6 +126,8 @@ function TournamentCreateForm() {
           players={players}
           setPlayers={setPlayers}
           key="players"
+          goNext={goNext}
+          goBack={goBack}
         />
       ),
     },

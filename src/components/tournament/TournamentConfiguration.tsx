@@ -9,10 +9,12 @@ import Button from '../common/Button';
 import ControlledRadioGroup from '../common/controlled/ControlledRadioGroup';
 interface TournamentConfigurationProps {
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  goNext: () => void;
 }
 
 function TournamentConfiguration({
   setSelectedIndex,
+  goNext,
 }: TournamentConfigurationProps) {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
@@ -30,6 +32,7 @@ function TournamentConfiguration({
     formState: { errors },
     reset,
     handleSubmit,
+    trigger,
   } = useFormContext<ITournamentConfiguration>();
   const resetForm = () => {
     reset({
@@ -48,12 +51,15 @@ function TournamentConfiguration({
       tournamentValue: '',
     });
   };
-  const onSubmit = (data: ITournamentConfiguration) => {
-    console.log(data);
+  const onSubmit = async () => {
+    const isStepValid = await trigger();
+    if (isStepValid) {
+      goNext();
+    }
   };
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       className="py-5 flex flex-col gap-4"
     >
       <InputSubtitle subtitle={tournmaentTranslation('TournamentName')}>
@@ -210,7 +216,9 @@ function TournamentConfiguration({
       <InputSubtitle
         className="w-full"
         subtitle={tournmaentTranslation('tournamentValue')}
-        descriptionSubtitle={tournmaentTranslation('tournamentValueDescription')}
+        descriptionSubtitle={tournmaentTranslation(
+          'tournamentValueDescription'
+        )}
       >
         <Input
           {...register('tournamentValue')}
@@ -230,13 +238,7 @@ function TournamentConfiguration({
         >
           {commonTranslations('erase')}
         </Button>
-        <Button
-          className="w-full lg:w-auto"
-          type="submit"
-          // onClick={() => {
-          //   setSelectedIndex(1);
-          // }}
-        >
+        <Button className="w-full lg:w-auto" type="button" onClick={onSubmit}>
           {commonTranslations('saveAndFollow')}
         </Button>
       </div>

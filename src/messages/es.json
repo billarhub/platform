@@ -7,7 +7,8 @@
     "home": "Inicio",
     "tournaments": "Torneos",
     "players": "Jugadores",
-    "clubs": "Club"
+    "clubs": "Club",
+    "ranking": "Ranking"
   },
   "AuthButtonGroup": {
     "login": "Ingresar",
@@ -19,7 +20,9 @@
     "players": "Jugadores",
     "clubs": "Club",
     "login": "Ingresar",
-    "register": "Registrarse"
+    "register": "Registrarse",
+    "ranking": "Ranking",
+    "tournamentCreate": "Crear torneo"
   },
   "NotFound": {
     "title": "Página no encontrada",

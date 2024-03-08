@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import TournamentList from '@/components/tournament/TournamentList';
 
 function Tournaments() {
-  return (
-    <div>Tournaments</div>
-  )
+  return <TournamentList />;
 }
 
-export default Tournaments
+export default Tournaments;

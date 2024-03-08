@@ -7,7 +7,8 @@
     "home": "Home",
     "tournaments": "Tournaments",
     "players": "Players",
-    "clubs": "Club"
+    "clubs": "Club",
+    "ranking": "Ranking"
   },
   "AuthButtonGroup": {
     "login": "Login",
@@ -19,7 +20,9 @@
     "players": "Players",
     "clubs": "Club",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "ranking": "Ranking",
+    "tournamentCreate": "Create a tournament"
   },
   "NotFound": {
     "title": "Page not found",

@@ -10,6 +10,7 @@ import { createLoginFormSchema } from '@/lib/schemas/loginSchema';
 import { useForm } from 'react-hook-form';
 import { ILoginPayload } from '@/models';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { createSession } from '@/app/actions';
 
 function LoginForm() {
   const loginTranslation = useTranslations('Login');
@@ -24,6 +25,7 @@ function LoginForm() {
   });
   const onSubmit = (data: ILoginPayload) => {
     console.log(data);
+    createSession();
   };
   return (
     <div className="w-screen md:w-full h-full flex justify-center items-center p-4 md:p-0">

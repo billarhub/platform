@@ -42,6 +42,7 @@ const config: Config = {
         table: {
           headers: '#646262',
           headerBackground: '#A6A6A6',
+          bodyBackground: '#D9D9D9'
         },
         stepperText: '#2C2B2B',
       },

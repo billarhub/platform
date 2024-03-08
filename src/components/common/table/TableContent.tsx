@@ -51,7 +51,7 @@ export default function TableContent<T extends MongooseModel>({
               key={row.id}
               role="button"
               tabIndex={0}
-              className="cursor-pointer border-b border-table-headerBackground hover:bg-table-headerBackground"
+              className="cursor-pointer border-b border-table-headerBackground bg-table-bodyBackground hover:bg-table-bodyBackground/80"
               data-id={row.original._id}
               onClick={(e) => onClick && onClick(e, row.original)}
               onKeyDown={onKeyDownOrUp}

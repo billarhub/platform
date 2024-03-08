@@ -170,7 +170,7 @@ function TournamentAddPlayer({
           </>
         )}
       </Accordion>
-      <PlayerTable handleGoToPage={handleGoToPage} columns={columns} />
+      <PlayerTable data={players} handleGoToPage={handleGoToPage} columns={columns} />
       <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-5 py-10">
         <Button
           onClick={deleteAllPlayers}

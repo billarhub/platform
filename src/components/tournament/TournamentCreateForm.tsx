@@ -16,6 +16,8 @@ import {
   createTournamentPlayerSchema,
 } from '@/lib/schemas/tournamentSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Button from '../common/Button';
+import TrashIcon from '../icon/TrashIcon';
 
 function TournamentCreateForm() {
   const tournmaentTranslation = useTranslations('Tournament');
@@ -41,32 +43,44 @@ function TournamentCreateForm() {
     },
   });
 
-  const tabs = [
-    tournmaentTranslation('configuration'),
-    tournmaentTranslation('players'),
-    tournmaentTranslation('confirmation'),
-    tournmaentTranslation('draw'),
-  ];
+  const deletePlayer = (player: Player) => {
+    setPlayers((prevPlayers) => prevPlayers.filter((p) => p !== player));
+  };
 
   const columnHelper = createColumnHelper<Player>();
   const columns = [
     columnHelper.accessor('firstName', {
-      header: 'First Name',
+      header: commonTranslation('firstName'),
     }),
     columnHelper.accessor('lastName', {
-      header: 'Last Name',
+      header: commonTranslation('lastName'),
     }),
     columnHelper.accessor('location', {
-      header: 'Location',
+      header: commonTranslation('location'),
     }),
     columnHelper.accessor('email', {
-      header: 'Email',
+      header: commonTranslation('email'),
     }),
     columnHelper.accessor('phone', {
-      header: 'Phone',
+      header: commonTranslation('phone'),
     }),
     columnHelper.accessor('active', {
-      header: 'Active',
+      header: commonTranslation('active'),
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: commonTranslation('actions'),
+      cell: (props) => (
+        // <button >Delete</button>
+        <div className="flex justify-center items-center">
+          <Button
+            className="rounded-full h-6 w-6 bg-red-600 px-0 py-0 flex justify-center items-center hover:bg-red-600/80"
+            onClick={() => deletePlayer(props.row.original)}
+          >
+            <TrashIcon className="text-white h-[17px] w-[17px]" />
+          </Button>
+        </div>
+      ),
     }),
   ];
 

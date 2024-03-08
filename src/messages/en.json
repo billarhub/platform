@@ -47,7 +47,8 @@
     "email": "Email",
     "phone": "Phone",
     "location": "Location",
-    "active": "Active"
+    "active": "Active",
+    "actions": "Actions"
   },
   "Tournament": {
     "title": "Tournament creator",

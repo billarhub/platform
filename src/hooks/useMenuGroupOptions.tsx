@@ -11,15 +11,9 @@ export function useMenuGroupOptions() {
       show: true,
     },
     {
-      text: t('players'),
-      href: '/players',
-      as: '/players',
-      show: true,
-    },
-    {
-      text: t('clubs'),
-      href: '/clubs',
-      as: '/clubs',
+      text: t('ranking'),
+      href: '/ranking',
+      as: '/ranking',
       show: true,
     },
     {

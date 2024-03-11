@@ -7,7 +7,8 @@
     "home": "Home",
     "tournaments": "Tournaments",
     "players": "Players",
-    "clubs": "Club"
+    "clubs": "Club",
+    "ranking": "Ranking"
   },
   "AuthButtonGroup": {
     "login": "Login",
@@ -19,7 +20,9 @@
     "players": "Players",
     "clubs": "Club",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "ranking": "Ranking",
+    "tournamentCreate": "Create a tournament"
   },
   "NotFound": {
     "title": "Page not found",
@@ -36,6 +39,41 @@
   "Common": {
     "invalidEmail": "Please enter a valid email",
     "passwordMinLength": "Password must be at least 8 characters long",
-    "nameMinLength": "Username must be at least 3 characters"
+    "nameMinLength": "Username must be at least 3 characters",
+    "saveAndFollow": "Save and continue",
+    "erase": "Erase",
+    "yes": "Yes",
+    "no": "No",
+    "addPlayer": "Add Player",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "location": "Location",
+    "active": "Active",
+    "actions": "Actions"
+  },
+  "Tournament": {
+    "title": "Tournament creator",
+    "configuration": "Configuration",
+    "players": "Players",
+    "confirmation": "Confirmation",
+    "draw": "Draw",
+    "TournamentName": "Tournament name",
+    "playersNumber": "Number of players",
+    "place": "Place",
+    "startDate": "Start date (dd/mm/yyyy)             ",
+    "endDate": "End date (dd/mm/yyyy)               ",
+    "playerMode": "Player mode",
+    "gameMode": "Game mode",
+    "tournamentType": "Tournament type",
+    "sets": "Sets per table",
+    "finalSet": "Final set",
+    "emailReminder": "email reminder to registrants",
+    "access": "Access",
+    "public": "Public",
+    "private": "Private",
+    "tournamentValue": "Tournament Value",
+    "tournamentValueDescription": "(enter value in USD)"
   }
 }

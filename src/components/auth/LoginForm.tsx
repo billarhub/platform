@@ -10,6 +10,7 @@ import { createLoginFormSchema } from '@/lib/schemas/loginSchema';
 import { useForm } from 'react-hook-form';
 import { ILoginPayload } from '@/models';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
 function LoginForm() {
   const loginTranslation = useTranslations('Login');
@@ -22,8 +23,13 @@ function LoginForm() {
   } = useForm<ILoginPayload>({
     resolver: zodResolver(loginFormSchema),
   });
+
+  const router = useRouter();
   const onSubmit = (data: ILoginPayload) => {
     console.log(data);
+    sessionStorage.setItem('session', 'authenticated');
+    sessionStorage.setItem('name', data.name);
+    router.push('/tournaments');
   };
   return (
     <div className="w-screen md:w-full h-full flex justify-center items-center p-4 md:p-0">

@@ -10,7 +10,16 @@ interface IMenuGroupProps {
 }
 
 function MenuGroup({ locale }: IMenuGroupProps) {
-  const menuItemsOptions = useMenuGroupOptions();
+  const session = sessionStorage.getItem('session');
+  const isAuthenticated = session !== null;
+
+  let menuItemsOptions = useMenuGroupOptions();
+  if (isAuthenticated) {
+    menuItemsOptions = menuItemsOptions.filter(
+      (option) => option.href !== '/login' && option.href !== '/sign-up'
+    );
+  }
+
   return (
     <Menu as="div" className="md:hidden">
       <div>

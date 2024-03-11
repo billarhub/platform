@@ -7,7 +7,8 @@
     "home": "Inicio",
     "tournaments": "Torneos",
     "players": "Jugadores",
-    "clubs": "Club"
+    "clubs": "Club",
+    "ranking": "Ranking"
   },
   "AuthButtonGroup": {
     "login": "Ingresar",
@@ -19,7 +20,9 @@
     "players": "Jugadores",
     "clubs": "Club",
     "login": "Ingresar",
-    "register": "Registrarse"
+    "register": "Registrarse",
+    "ranking": "Ranking",
+    "tournamentCreate": "Crear torneo"
   },
   "NotFound": {
     "title": "Página no encontrada",
@@ -36,6 +39,41 @@
   "Common": {
     "invalidEmail": "Introduce un correo válido",
     "passwordMinLength": "La contraseña debe contener al menos 8 caracteres",
-    "nameMinLength": "El nombre de usuario debe tener al menos 3 caracteres"
-  } 
+    "nameMinLength": "El nombre de usuario debe tener al menos 3 caracteres",
+    "saveAndFollow": "Guardar y seguir",
+    "erase": "Borrar",
+    "yes": "Sí",
+    "no": "No",
+    "addPlayer": "Agregar Jugador",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "location": "Ubicación",
+    "active": "Activo",
+    "actions": "Acciones"
+  },
+  "Tournament": {
+    "title": "Creador de torneo",
+    "configuration": "Configuración",
+    "players": "Jugadores",
+    "confirmation": "Confirmación",
+    "draw": "Sorteo",
+    "TournamentName": "Nombre del torneo",
+    "playersNumber": "Cantidad de jugadores",
+    "place": "Lugar",
+    "startDate": "Fecha de inicio (dd/mm/aaaa)",
+    "endDate": "Fecha de fin (dd/mm/aaaa)      ",
+    "playerMode": "Modalidad jugador",
+    "gameMode": "Modalidad de juego",
+    "tournamentType": "Tipo de torneo",
+    "sets": "Sets por mesa",
+    "finalSet": "Set de la final",
+    "emailReminder": "recordatorio de correo electrónico a inscritos",
+    "access": "Acceso",
+    "public": "Público",
+    "private": "Privado",
+    "tournamentValue": "Valor del torneo",
+    "tournamentValueDescription": "(ingresar valor en usd)"
+  }
 }

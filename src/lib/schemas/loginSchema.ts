@@ -4,7 +4,7 @@ export const createLoginFormSchema = (
     t: (id: string, args?: any) => string
 ) => {
     return z.object({
-        name: z.string().min(3, t('nameMinLength')).optional(),
+        email: z.string().email('Introduce un correo válido'),
         password: z.string().min(8, t('passwordMinLength')).optional(),
     });
 };

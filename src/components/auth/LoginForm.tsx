@@ -7,10 +7,10 @@ import Button from '../common/Button';
 import UserIcon from '../icon/UserIcon';
 import PasswordIcon from '../icon/PasswordIcon';
 import { createLoginFormSchema } from '@/lib/schemas/loginSchema';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ILoginPayload } from '@/models';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 function LoginForm() {
   const loginTranslation = useTranslations('Login');
@@ -24,31 +24,54 @@ function LoginForm() {
     resolver: zodResolver(loginFormSchema),
   });
 
-  const router = useRouter();
-  const onSubmit = (data: ILoginPayload) => {
-    console.log(data);
-    sessionStorage.setItem('session', 'authenticated');
-    sessionStorage.setItem('name', data.name);
-    router.push('/tournaments');
+  const handleLogin: SubmitHandler<ILoginPayload> = async (
+    data,
+    e?: React.BaseSyntheticEvent
+  ) => {
+    e?.preventDefault();
+    try {
+      const res = await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+      });
+      // const res = await fetch(
+      //   'https://dev-api-billarhub.onrender.com/auth/login',
+      //   {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+            
+      //     },
+      //     body: JSON.stringify({
+      //       email: data.email,
+      //       password: data.password,
+      //     }),
+      //   }
+      // );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <div className="w-screen md:w-full h-full flex justify-center items-center p-4 md:p-0">
       <Card className="rounded-xl md:h-auto md:w-[687px]">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(handleLogin)}
           className="flex flex-col justify-center items-center px-6 py-10 md:px-24 md:py-16 gap-5 text-black"
         >
           <h1 className="md:text-2xl text-md font-bold text-black uppercase mb-6">
             {loginTranslation('title')}
           </h1>
           <Input
-            placeholder={loginTranslation('name')}
-            {...register('name')}
-            name="name"
+            placeholder={loginTranslation('email')}
+            {...register('email')}
+            name="email"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
             leftIcon={<UserIcon className="w-8 h-8 rounded-md" />}
-            error={errors?.name?.message}
+            error={errors?.email?.message}
           />
           <Input
             placeholder={loginTranslation('password')}

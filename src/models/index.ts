@@ -40,7 +40,7 @@ export interface IRoute {
 }
 
 export interface ILoginPayload {
-    name: string;
+    email: string;
     password: string;
 }
 

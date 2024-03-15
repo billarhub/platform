@@ -4,7 +4,6 @@ import React from 'react';
 function DashboardPage({
   params: { locale },
 }: {
-  children: React.ReactNode;
   params: { locale: string };
 }) {
   return <Dashboard locale={locale} />;

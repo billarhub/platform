@@ -1,18 +1,25 @@
 'use client';
 import React from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import Card from '../common/Card';
+import { createLoginFormSchema } from '@/lib/schemas/loginSchema';
+import { IDecodedJwt, ILoginPayload, IUser } from '@/models';
 import { Input } from '../common/Input';
+import Card from '../common/Card';
 import Button from '../common/Button';
 import UserIcon from '../icon/UserIcon';
 import PasswordIcon from '../icon/PasswordIcon';
-import { createLoginFormSchema } from '@/lib/schemas/loginSchema';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { ILoginPayload } from '@/models';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
+import { jwtDecode } from 'jwt-decode';
+import { createSession } from '@/app/actions';
+import { useRouter } from 'next/navigation';
 
-function LoginForm() {
+interface ILoginFormProps {
+  locale: string;
+}
+
+function LoginForm({ locale }: ILoginFormProps) {
+  const router = useRouter();
   const loginTranslation = useTranslations('Login');
   const commonTranslations = useTranslations('Common');
   const loginFormSchema = createLoginFormSchema(commonTranslations);
@@ -30,25 +37,39 @@ function LoginForm() {
   ) => {
     e?.preventDefault();
     try {
-      const res = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-      });
-      // const res = await fetch(
-      //   'https://dev-api-billarhub.onrender.com/auth/login',
-      //   {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-            
-      //     },
-      //     body: JSON.stringify({
-      //       email: data.email,
-      //       password: data.password,
-      //     }),
-      //   }
-      // );
-      console.log(res);
+      let authToken;
+      let jwtDecoded;
+      const res = await fetch(
+        'https://dev-api-billarhub.onrender.com/auth/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: data.email,
+            password: data.password,
+          }),
+        }
+      );
+
+      authToken = await res.json();
+
+      jwtDecoded = jwtDecode(authToken.data.token) as IDecodedJwt;
+
+      const userResponse = await fetch(
+        `https://dev-api-billarhub.onrender.com/user/${jwtDecoded.userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const user = await userResponse.json();
+      await createSession(authToken.data.token, user.data.data.user);
+      router.push(`/${locale}/dashboard`);
     } catch (err) {
       console.log(err);
     }

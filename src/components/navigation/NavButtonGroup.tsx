@@ -3,7 +3,11 @@ import { useTranslations } from 'next-intl';
 import { useMenuGroupOptions } from '@/hooks/useMenuGroupOptions';
 import Link from 'next/link';
 
-function NavButtonGroup() {
+interface INavButtonGroupProps {
+  locale: string;
+}
+
+function NavButtonGroup({ locale }: INavButtonGroupProps) {
   const t = useTranslations('NavButtonGroup');
   const routeT = useTranslations('Route');
   const menuItemsOptions = useMenuGroupOptions();
@@ -12,12 +16,13 @@ function NavButtonGroup() {
     <div className="hidden md:flex h-full">
       {menuItemsOptions
         .filter(
-          (item) => item.text !== routeT('login') && item.text !== routeT('register')
+          (item) =>
+            item.text !== routeT('login') && item.text !== routeT('register')
         )
         .map((item, index, array) => (
           <React.Fragment key={item.href}>
             <Link
-              href={item.href}
+              href={`/${locale}/${item.href}`}
               className="px-4 py-2 text-black font-bold uppercase bg-transparent border-none"
             >
               {item.text}

@@ -1,8 +1,12 @@
 import { useTranslations } from 'next-intl';
-import React, { use } from 'react';
+import React from 'react';
 import DashboardCard from './DashboardCard';
 
-function Dashboard() {
+interface IDashboardProps {
+  locale: string;
+}
+
+function Dashboard({locale}: IDashboardProps) {
   const routeTranslations = useTranslations('Route');
   const dashboardCardOptions = [
     {
@@ -16,7 +20,7 @@ function Dashboard() {
     <div className="flex flex-col justify-center items-center w-full h-full gap-16 mt-24 p-5 md:p-0">
       {dashboardCardOptions.map((option, index) => {
         return (
-          <DashboardCard key={index} title={option.title} href={option.href} />
+          <DashboardCard locale={locale} key={index} title={option.title} href={option.href} />
         );
       })}
     </div>

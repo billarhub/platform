@@ -26,7 +26,7 @@ export type Player = {
     _id: string;
     createdAt: string;
     updatedAt: string;
-  };
+};
 export interface IRoute {
     text: string;
     href: string;
@@ -40,7 +40,7 @@ export interface IRoute {
 }
 
 export interface ILoginPayload {
-    name: string;
+    email: string;
     password: string;
 }
 
@@ -67,4 +67,20 @@ export interface ITournamentAddPlayer {
     email: string;
     phone: string;
     active: boolean;
+}
+
+export interface IDecodedJwt {
+    userId: string;
+    role: string | null;
+    iat: number;
+}
+
+export interface IUser {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    documentId: string;
+    email: string;
+    phone: string;
+    role: string;
 }

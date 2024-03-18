@@ -32,6 +32,7 @@
   "Login": {
     "title": "Login",
     "name": "Username",
+    "email": "Email",
     "password": "Password",
     "submit": "Submit",
     "register": "Don't have an account? Register"

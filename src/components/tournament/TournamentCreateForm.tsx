@@ -18,7 +18,6 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '../common/Button';
 import TrashIcon from '../icon/TrashIcon';
-import withAuth from '../auth/withAuth';
 
 function TournamentCreateForm() {
   const tournmaentTranslation = useTranslations('Tournament');
@@ -167,4 +166,4 @@ function TournamentCreateForm() {
   );
 }
 
-export default withAuth(TournamentCreateForm);
+export default TournamentCreateForm;

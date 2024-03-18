@@ -1,14 +1,53 @@
 import createMiddleware from 'next-intl/middleware';
 import { localesConfig } from './utils/localesConfig';
+import { NextRequest, NextResponse } from 'next/server';
+const publicPages = ['/login', '/sign-up'];
 
-export default createMiddleware({
-  // A list of all locales that are supported
+const intlMiddleware = createMiddleware({
   locales: localesConfig,
-
-  // Used when no locale matches
   defaultLocale: 'es'
 });
 
+
+
+export function middleware(request: NextRequest) {
+  const authToken = request.cookies.get("authToken")?.value;
+
+  const publicPathnameRegex = RegExp(
+    `^(/(${localesConfig.join('|')}))?(${publicPages
+      .flatMap((p) => (p === '/' ? ['', '/'] : p))
+      .join('|')})/?$`,
+    'i'
+  );
+
+  const isPublicPage = publicPathnameRegex.test(request.nextUrl.pathname);
+
+  const locale = request.nextUrl.pathname.split('/')[1];
+
+  // If the user is unauthenticated and tries to access a non-public page
+  if (!isPublicPage && !authToken) {
+    const response = NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+    response.cookies.delete("authToken");
+    return response;
+  }
+
+  // If the user is authenticated and tries to access a public page
+  if (isPublicPage && authToken) {
+    const response = NextResponse.redirect(new URL(`/${locale}/tournaments`, request.url));
+    return response;
+  }
+
+  if (!isPublicPage && authToken) {
+    return intlMiddleware(request);
+  }
+
+  if (isPublicPage && !authToken) {
+
+    return intlMiddleware(request);
+  }
+
+}
+
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/'],
+  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(auth)'],
 };

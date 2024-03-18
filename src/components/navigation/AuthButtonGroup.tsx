@@ -5,7 +5,11 @@ import { useMenuGroupOptions } from '@/hooks/useMenuGroupOptions';
 import Link from 'next/link';
 import LocaleSwitcher from '../common/LocaleSwitcher';
 
-function AuthButtonGroup() {
+interface IAuthButtonGroupProps {
+  locale: string;
+}
+
+function AuthButtonGroup({ locale }: IAuthButtonGroupProps) {
   const t = useTranslations('AuthButtonGroup');
   const routeT = useTranslations('Route');
   const menuItemsOptions = useMenuGroupOptions();
@@ -21,7 +25,7 @@ function AuthButtonGroup() {
         .map((item) => (
           <Link
             key={item.href}
-            href={item.href}
+            href={`/${locale}${item.href}`}
             className="px-4 py-2 text-black font-bold uppercase bg-transparent border-none"
           >
             {item.text}

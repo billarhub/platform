@@ -3,6 +3,8 @@ import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import FooterLogo from '@/components/common/FooterLogo';
 import Header from '@/components/common/Header';
+import { cookies } from 'next/headers';
+import { IUser } from '@/models';
 
 export default function ContentLayout({
   children,
@@ -13,9 +15,12 @@ export default function ContentLayout({
 }) {
   unstable_setRequestLocale(locale);
   const messages = useMessages();
+  const userCookie = cookies().get('user')?.value;
+  const userName = userCookie ? (JSON.parse(userCookie) as IUser).firstname : '';
+  const session = cookies().get('authToken')?.value;
   return (
     <NextIntlClientProvider messages={messages}>
-      <Header locale={locale} />
+      <Header userName={userName} session={session} locale={locale} />
 
       <main className="flex-grow ">
         <div className="flex flex-col h-full">{children}</div>

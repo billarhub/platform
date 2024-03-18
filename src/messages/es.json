@@ -32,6 +32,7 @@
   "Login": {
     "title": "Inicio de sesión",
     "name": "Nombre de usuario",
+    "email": "Correo electrónico",
     "password": "Contraseña",
     "submit": "Ingresar",
     "register": "¿No tienes una cuenta? Regístrate"

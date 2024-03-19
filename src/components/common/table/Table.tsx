@@ -17,12 +17,6 @@ import TableContent from './TableContent';
 import TableFooter from './TableFooter';
 import TablePagination from './TablePagination';
 
-declare module '@tanstack/table-core' {
-  interface TableMeta<TData extends RowData> {
-    lengthOfData: number;
-  }
-}
-
 type TTableContext<T> = {
   hook: Table<T> | null;
 };

@@ -4,7 +4,7 @@ import BillarHubLogo from '../../../public/image/logo_new_billar.png';
 
 function FooterLogo() {
   return (
-    <div className="hidden md:flex justify-end items-center p-10">
+    <div className="hidden md:flex justify-end items-center p-10 bg-transparent">
       <Image
         src={BillarHubLogo}
         alt="Billarhub Platform"

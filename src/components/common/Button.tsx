@@ -1,3 +1,4 @@
+import { cn } from '@/lib/cn';
 import React from 'react';
 
 interface ButtonProps
@@ -12,17 +13,22 @@ interface ButtonProps
 export default function Button({
   className,
   children,
-  fullWidth = true,
+  fullWidth = false,
   outlined = false,
   ...props
 }: ButtonProps) {
   return (
     <button
-      className={`py-2 px-4 rounded font-semibold tracking-wide uppercase ${
-        outlined
-          ? 'border border-primary-600 text-primary-600 bg-white'
-          : 'bg-primary-600 text-white hover:bg-primary-600/80 duration-150 ease-in-out focus:bg-primary-400'
-      } ${fullWidth ? 'w-full' : ''} ${className}`}
+      className={cn(
+        'py-2 px-4 rounded font-semibold tracking-wide uppercase',
+        {
+          'border border-primary-600 text-primary-600 bg-white': outlined,
+          'bg-primary-600 text-white hover:bg-primary-600/80 duration-150 ease-in-out focus:bg-primary-400':
+            !outlined,
+          'w-full': fullWidth,
+        },
+        className
+      )}
       {...props}
     >
       {children}

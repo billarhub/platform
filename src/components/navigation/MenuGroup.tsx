@@ -7,10 +7,19 @@ import Link from 'next/link';
 
 interface IMenuGroupProps {
   locale: string;
+  session?: string;
 }
 
-function MenuGroup({ locale }: IMenuGroupProps) {
-  const menuItemsOptions = useMenuGroupOptions();
+function MenuGroup({ locale, session }: IMenuGroupProps) {
+  const isAuthenticated = session !== null;
+
+  let menuItemsOptions = useMenuGroupOptions();
+  if (isAuthenticated) {
+    menuItemsOptions = menuItemsOptions.filter(
+      (option) => option.href !== '/login' && option.href !== '/sign-up'
+    );
+  }
+
   return (
     <Menu as="div" className="md:hidden">
       <div>

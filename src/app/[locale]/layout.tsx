@@ -1,9 +1,10 @@
 import React from 'react';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { cookies } from 'next/headers';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { IUser } from '@/models';
 import FooterLogo from '@/components/common/FooterLogo';
 import Header from '@/components/common/Header';
-
 
 export default function ContentLayout({
   children,
@@ -14,14 +15,22 @@ export default function ContentLayout({
 }) {
   unstable_setRequestLocale(locale);
   const messages = useMessages();
+  const userCookie = cookies().get('user')?.value;
+  const userName = userCookie
+    ? (JSON.parse(userCookie) as IUser).firstname
+    : '';
+  const session = cookies().get('authToken')?.value;
   return (
     <NextIntlClientProvider messages={messages}>
-      <section>
-        <Header locale={locale} />
+      <Header userName={userName} session={session} locale={locale} />
 
-        {children}
-        <FooterLogo />
-      </section>
+      <main className="flex-grow">
+        <div className="flex flex-col h-full">
+          {children}
+        </div>
+      </main>
+
+      <FooterLogo />
     </NextIntlClientProvider>
   );
 }

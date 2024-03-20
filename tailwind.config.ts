@@ -51,6 +51,7 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'dashboardCardGradient': 'linear-gradient(180deg, #FF4E00 0%, #A53605 100%)',
+        'mainBackground': "url('/image/main_background.webp')",
       },
     },
   },

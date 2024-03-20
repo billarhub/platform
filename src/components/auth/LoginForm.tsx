@@ -55,10 +55,10 @@ function LoginForm({ locale }: ILoginFormProps) {
 
       authToken = await res.json();
 
-      jwtDecoded = jwtDecode(authToken.data.token) as IDecodedJwt;
+      jwtDecoded = jwtDecode(authToken?.data?.token) as IDecodedJwt;
 
       const userResponse = await fetch(
-        `https://dev-api-billarhub.onrender.com/user/${jwtDecoded.userId}`,
+        `https://dev-api-billarhub.onrender.com/user/${jwtDecoded?.userId}`,
         {
           method: 'GET',
           headers: {
@@ -68,7 +68,7 @@ function LoginForm({ locale }: ILoginFormProps) {
       );
 
       const user = await userResponse.json();
-      await createSession(authToken.data.token, user.data.data.user);
+      await createSession(authToken?.data?.token, user?.data?.data?.user);
       router.push(`/${locale}/dashboard`);
     } catch (err) {
       console.log(err);

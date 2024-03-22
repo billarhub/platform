@@ -44,7 +44,7 @@ function LoginForm({ locale }: ILoginFormProps) {
       let jwtDecoded;
 
       const response = await signIn({
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: data.password,
       });
 

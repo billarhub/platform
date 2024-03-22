@@ -27,6 +27,11 @@ export type Player = {
     createdAt: string;
     updatedAt: string;
 };
+
+export type OptionType = {
+    label: string;
+    value: string | number;
+};
 export interface IRoute {
     text: string;
     href: string;
@@ -83,4 +88,12 @@ export interface IUser {
     email: string;
     phone: string;
     role: string;
+}
+
+export interface ILoginInterfaceResponse {
+    timestamp: string;
+    data: {
+        token: string;
+        refreshToken: string;
+    }
 }

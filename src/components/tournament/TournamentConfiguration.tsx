@@ -3,18 +3,28 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Input } from '../common/Input';
-import { ITournamentConfiguration } from '@/models';
+import { ITournamentConfiguration, OptionType } from '@/models';
 import InputSubtitle from '../common/InputSubtitle';
 import Button from '../common/Button';
 import ControlledRadioGroup from '../common/controlled/ControlledRadioGroup';
+import { Select } from '../common/Select';
+import { numberOfPlayers } from '@/static/numberOfPlayers';
+import {
+  useCreateTournament,
+  useGetTournamentTypes,
+} from '@/hooks/api/tournament';
+import SpinnerIcon from '../icon/SpinnerIcon';
+import TournamentTypeSelect from './TournamentTypeSelect';
 interface TournamentConfigurationProps {
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
   goNext: () => void;
+  token: string;
 }
 
 function TournamentConfiguration({
   setSelectedIndex,
   goNext,
+  token,
 }: TournamentConfigurationProps) {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
@@ -26,40 +36,54 @@ function TournamentConfiguration({
     { id: 1, value: 'public', label: tournmaentTranslation('public') },
     { id: 2, value: 'private', label: tournmaentTranslation('private') },
   ];
+
+  const {
+    mutateAsync,
+    isLoading,
+    isError: isCreateTournamentError,
+    error: createTournamentError,
+  } = useCreateTournament(token);
+
   const {
     control,
     register,
     formState: { errors },
     reset,
     handleSubmit,
-    trigger,
+    setValue,
+    watch,
   } = useFormContext<ITournamentConfiguration>();
+
   const resetForm = () => {
     reset({
       name: '',
-      players: 0,
-      place: '',
-      startDate: '',
+      playersQuantity: 0,
+      location: '',
+      initDate: '',
       endDate: '',
       playerMode: '',
       gameMode: '',
-      tournamentType: '',
-      sets: 0,
-      finalSet: 0,
-      emailNotificacion: false,
+      tournamentTypeId: '',
+      qtySetPerTable: 1,
+      qtySetPerFinal: 1,
+      emailRemember: false,
       access: '',
-      tournamentValue: '',
+      moneyPrice: '0',
     });
   };
-  const onSubmit = async () => {
-    const isStepValid = await trigger();
-    if (isStepValid) {
-      goNext();
+
+  const onSubmit = async (data: ITournamentConfiguration) => {
+    try {
+      const response = await mutateAsync(data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
+
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="py-5 flex flex-col gap-4"
     >
       <InputSubtitle subtitle={tournmaentTranslation('TournamentName')}>
@@ -77,26 +101,18 @@ function TournamentConfiguration({
           className="w-full"
           subtitle={tournmaentTranslation('playersNumber')}
         >
-          <Input
-            {...register('players')}
-            name="players"
-            className="w-full"
-            inputClassName="placeholder:font-base uppercase"
-            error={errors?.players?.message}
-            type="number"
-            min="0"
-          />
+          <Select options={numberOfPlayers} />
         </InputSubtitle>
         <InputSubtitle
           className="w-full"
           subtitle={tournmaentTranslation('place')}
         >
           <Input
-            {...register('place')}
-            name="place"
+            {...register('location')}
+            name="location"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.place?.message}
+            error={errors?.location?.message}
           />
         </InputSubtitle>
       </div>
@@ -107,12 +123,15 @@ function TournamentConfiguration({
           subtitle={tournmaentTranslation('startDate')}
         >
           <Input
-            {...register('startDate')}
-            name="startDate"
+            {...register('initDate')}
+            name="initDate"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.startDate?.message}
+            error={errors?.initDate?.message}
             type="date"
+            pattern="\d{2}-\d{2}-\d{4}"
+            min={new Date().toISOString().slice(0, 16)}
+            max="9999-12-31T23:59"
           />
         </InputSubtitle>
         <InputSubtitle
@@ -128,6 +147,8 @@ function TournamentConfiguration({
             inputClassName="placeholder:font-base uppercase"
             error={errors?.endDate?.message}
             type="date"
+            pattern="\d{2}-\d{2}-\d{4}"
+            min={watch('initDate')}
           />
         </InputSubtitle>
       </div>
@@ -162,12 +183,10 @@ function TournamentConfiguration({
           className="w-full"
           subtitle={tournmaentTranslation('tournamentType')}
         >
-          <Input
-            {...register('tournamentType')}
-            name="tournamentType"
-            className="w-full"
-            inputClassName="placeholder:font-base uppercase"
-            error={errors?.tournamentType?.message}
+          <TournamentTypeSelect
+            token={token}
+            error={errors?.tournamentTypeId?.message}
+            setValue={setValue}
           />
         </InputSubtitle>
         <InputSubtitle
@@ -175,13 +194,15 @@ function TournamentConfiguration({
           subtitle={tournmaentTranslation('sets')}
         >
           <Input
-            {...register('sets')}
-            name="sets"
+            {...register('qtySetPerTable', {
+              setValueAs: (value) => parseInt(value),
+            })}
+            name="qtySetPerTable"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.sets?.message}
+            error={errors?.qtySetPerTable?.message}
             type="number"
-            min="0"
+            min="1"
           />
         </InputSubtitle>
         <InputSubtitle
@@ -189,22 +210,24 @@ function TournamentConfiguration({
           subtitle={tournmaentTranslation('finalSet')}
         >
           <Input
-            {...register('finalSet')}
-            name="finalSet"
+            {...register('qtySetPerFinal', {
+              setValueAs: (value) => parseInt(value),
+            })}
+            name="qtySetPerFinal"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.finalSet?.message}
+            error={errors?.qtySetPerFinal?.message}
             type="number"
-            min="0"
+            min="1"
           />
         </InputSubtitle>
       </div>
       <ControlledRadioGroup
         control={control}
-        name="emailNotificacion"
+        name="emailRemember"
         label={tournmaentTranslation('emailReminder')}
         options={emailReminderOptions}
-        error={errors?.emailNotificacion}
+        error={errors?.emailRemember}
       />
       <ControlledRadioGroup
         control={control}
@@ -221,11 +244,13 @@ function TournamentConfiguration({
         )}
       >
         <Input
-          {...register('tournamentValue')}
-          name="tournamentValue"
+          {...register('moneyPrice', {
+            setValueAs: (value) => parseInt(value),
+          })}
+          name="moneyPrice"
           className="w-full"
           inputClassName="placeholder:font-base uppercase"
-          error={errors?.tournamentValue?.message}
+          error={errors?.moneyPrice?.message}
           leftIcon="$"
           type="number"
           min="0"
@@ -238,8 +263,12 @@ function TournamentConfiguration({
         >
           {commonTranslations('erase')}
         </Button>
-        <Button className="w-full lg:w-auto" type="button" onClick={onSubmit}>
-          {commonTranslations('saveAndFollow')}
+        <Button className="w-full lg:w-auto" type="submit">
+          {isLoading ? (
+            <SpinnerIcon className="m-auto w-10 h-10 text-gray-200 animate-spin fill-primary-300" />
+          ) : (
+            commonTranslations('saveAndFollow')
+          )}
         </Button>
       </div>
     </form>

@@ -87,7 +87,7 @@ function LoginForm({ locale }: ILoginFormProps) {
             {...register('email')}
             name="email"
             className="w-full"
-            inputClassName="placeholder:font-base uppercase"
+            inputClassName="placeholder:font-base"
             leftIcon={<UserIcon className="w-8 h-8 rounded-md" />}
             error={errors?.email?.message}
           />
@@ -97,7 +97,7 @@ function LoginForm({ locale }: ILoginFormProps) {
             name="password"
             className="w-full"
             type="password"
-            inputClassName="placeholder:font-base uppercase"
+            inputClassName="placeholder:font-base"
             leftIcon={<PasswordIcon className="w-8 h-8 rounded-md" />}
             error={errors?.password?.message}
           />

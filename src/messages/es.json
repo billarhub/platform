@@ -79,6 +79,7 @@
     "private": "Privado",
     "tournamentValue": "Valor del torneo",
     "tournamentValueDescription": "(ingresar valor en usd)",
-    "tournamentCreated": "Torneo creado"
+    "tournamentCreated": "Torneo creado",
+    "tournamentSummary": "Resumen del torneo"
   }
 }

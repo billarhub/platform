@@ -2,8 +2,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { createColumnHelper } from '@tanstack/react-table';
-import { ITournamentAddPlayer, OptionType, Player } from '@/models';
+import { ITournamentAddPlayer } from '@/models';
 import TournamentConfiguration from './TournamentConfiguration';
 import Stepper from '../common/Stepper';
 import BallEightIcon from '../icon/BallEightIcon';
@@ -17,6 +16,7 @@ import {
 } from '@/lib/schemas/tournamentSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import TournamentConfirmation from './TournamentConfirmation';
+import TournamentSummary from './TournamentSummary';
 
 interface ITournamentCreateFormProps {
   token: string;
@@ -101,9 +101,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
       label: tournmaentTranslation('confirmation'),
       icon: CheckCircleIcon,
       component: (
-        <p className="text-black" key="confirmacion">
-          Confirmación Content...
-        </p>
+        <TournamentSummary token={token} goNext={goNext} />
       ),
     },
     {
@@ -119,7 +117,6 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
         <Stepper
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}
-          // panels={panels}
           steps={steps}
           ariaLabel="tournament-tabs"
           mainTitle={tournmaentTranslation('title')}

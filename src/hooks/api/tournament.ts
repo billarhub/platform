@@ -67,3 +67,30 @@ export function useCreateTournament(token: string) {
 
     return { ...mutation, isLoading, isError, error };
 }
+
+export function useGetTournamentById(token: string, id: string) {
+    const query = useQuery({
+        queryKey: ['tournament', token, id],
+        queryFn: async () => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_KEY}/tournament/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        },
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false
+    });
+
+    const isLoading = query.status === 'pending';
+    const isError = query.status === 'error';
+    const error = query.error;
+
+    return { ...query, isLoading, isError, error };
+}

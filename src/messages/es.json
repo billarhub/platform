@@ -78,6 +78,7 @@
     "public": "Público",
     "private": "Privado",
     "tournamentValue": "Valor del torneo",
-    "tournamentValueDescription": "(ingresar valor en usd)"
+    "tournamentValueDescription": "(ingresar valor en usd)",
+    "tournamentCreated": "Torneo creado"
   }
 }

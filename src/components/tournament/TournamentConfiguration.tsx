@@ -11,8 +11,9 @@ import { Select } from '../common/Select';
 import { numberOfPlayers } from '@/static/numberOfPlayers';
 import {
   useCreateTournament,
-  useGetTournamentTypes,
 } from '@/hooks/api/tournament';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import SpinnerIcon from '../icon/SpinnerIcon';
 import TournamentTypeSelect from './TournamentTypeSelect';
 interface TournamentConfigurationProps {
@@ -28,6 +29,13 @@ function TournamentConfiguration({
 }: TournamentConfigurationProps) {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
+  const notify = (type: 'success' | 'error') => {
+    if (type === 'success') {
+      toast.success(tournmaentTranslation('tournamentCreated'));
+    } else if (type === 'error') {
+      toast.error('Error');
+    }
+  };
   const emailReminderOptions = [
     { id: 1, value: true, label: commonTranslations('yes') },
     { id: 2, value: false, label: commonTranslations('no') },
@@ -74,9 +82,24 @@ function TournamentConfiguration({
 
   const onSubmit = async (data: ITournamentConfiguration) => {
     try {
+      
       const response = await mutateAsync(data);
-      console.log(response);
+      if (
+        response &&
+        response.data &&
+        response.data.data &&
+        response.data.data.tournamentId
+      ) {
+        sessionStorage.setItem(
+          'currentTournamentId',
+          response.data.data.tournamentId
+        );
+        notify('success');
+        goNext();
+      }
+      // console.log(response);
     } catch (error) {
+      notify('error');
       console.log(error);
     }
   };
@@ -86,6 +109,7 @@ function TournamentConfiguration({
       onSubmit={handleSubmit(onSubmit)}
       className="py-5 flex flex-col gap-4"
     >
+      <ToastContainer />
       <InputSubtitle subtitle={tournmaentTranslation('TournamentName')}>
         <Input
           {...register('name')}

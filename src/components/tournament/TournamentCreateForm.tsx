@@ -16,9 +16,7 @@ import {
   createTournamentPlayerSchema,
 } from '@/lib/schemas/tournamentSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Button from '../common/Button';
-import TrashIcon from '../icon/TrashIcon';
-import { useGetTournamentTypes } from '@/hooks/api/tournament';
+import TournamentConfirmation from './TournamentConfirmation';
 
 interface ITournamentCreateFormProps {
   token: string;
@@ -111,11 +109,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
     {
       label: tournmaentTranslation('draw'),
       icon: BallEightIcon,
-      component: (
-        <p className="text-black" key="sorteo">
-          Sorteo Content...
-        </p>
-      ),
+      component: <TournamentConfirmation />,
     },
   ];
 

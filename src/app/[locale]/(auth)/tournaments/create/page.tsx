@@ -1,13 +1,8 @@
-import React from 'react';
-import { cookies } from 'next/headers';
-import Loading from '@/components/common/Loading';
 import TournamentCreateForm from '@/components/tournament/TournamentCreateForm';
+import React from 'react';
 
-async function TorunamentCreate() {
-  const session = cookies().get('authToken')?.value;
-  return (
-    <>{!session ? <Loading /> : <TournamentCreateForm token={session} />}</>
-  );
+function TorunamentCreate() {
+  return <TournamentCreateForm />;
 }
 
 export default TorunamentCreate;

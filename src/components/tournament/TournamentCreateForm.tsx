@@ -3,7 +3,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
 import { createColumnHelper } from '@tanstack/react-table';
-import { ITournamentAddPlayer, OptionType, Player } from '@/models';
+import { ITournamentAddPlayer, Player } from '@/models';
 import TournamentConfiguration from './TournamentConfiguration';
 import Stepper from '../common/Stepper';
 import BallEightIcon from '../icon/BallEightIcon';
@@ -18,13 +18,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '../common/Button';
 import TrashIcon from '../icon/TrashIcon';
-import { useGetTournamentTypes } from '@/hooks/api/tournament';
 
-interface ITournamentCreateFormProps {
-  token: string;
-}
-
-function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
+function TournamentCreateForm() {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslation = useTranslations('Common');
   const tournamentConfigSchema =
@@ -38,13 +33,12 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
   });
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [players, setPlayers] = React.useState<ITournamentAddPlayer[]>([]);
-
   const form = useForm({
     resolver: zodResolver(validationSchema[selectedIndex]),
     defaultValues: {
-      qtySetPerTable: 1,
-      qtySetPerFinal: 1,
-      playersQuantity: 8,
+      players: 0,
+      sets: 0,
+      finalSet: 0,
       phone: '',
     },
   });
@@ -61,9 +55,46 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
     }
   };
 
-  const deletePlayer = (player: ITournamentAddPlayer) => {
+  const deletePlayer = (player: Player) => {
     setPlayers((prevPlayers) => prevPlayers.filter((p) => p !== player));
   };
+
+  const columnHelper = createColumnHelper<Player>();
+  const columns = [
+    columnHelper.accessor('firstName', {
+      header: commonTranslation('firstName'),
+    }),
+    columnHelper.accessor('lastName', {
+      header: commonTranslation('lastName'),
+    }),
+    columnHelper.accessor('location', {
+      header: commonTranslation('location'),
+    }),
+    columnHelper.accessor('email', {
+      header: commonTranslation('email'),
+    }),
+    columnHelper.accessor('phone', {
+      header: commonTranslation('phone'),
+    }),
+    columnHelper.accessor('active', {
+      header: commonTranslation('active'),
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: commonTranslation('actions'),
+      cell: (props) => (
+        // <button >Delete</button>
+        <div className="flex justify-center items-center">
+          <Button
+            className="rounded-full h-6 w-6 bg-red-600 px-0 py-0 flex justify-center items-center hover:bg-red-600/80"
+            onClick={() => deletePlayer(props.row.original)}
+          >
+            <TrashIcon className="text-white h-[17px] w-[17px]" />
+          </Button>
+        </div>
+      ),
+    }),
+  ];
 
   const handleGoToPage = React.useCallback(
     (value: number) => {
@@ -81,7 +112,6 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
           setSelectedIndex={setSelectedIndex}
           key="configuration"
           goNext={goNext}
-          token={token}
         />
       ),
     },
@@ -91,6 +121,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
       component: (
         <TournamentAddPlayer
           handleGoToPage={handleGoToPage}
+          columns={columns}
           players={players}
           setPlayers={setPlayers}
           key="players"

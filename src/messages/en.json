@@ -41,9 +41,6 @@
     "invalidEmail": "Please enter a valid email",
     "passwordMinLength": "Password must be at least 8 characters long",
     "nameMinLength": "Username must be at least 3 characters",
-    "minCharacters": "Minimum {count} characters required",
-    "minValue": "Minimum value is {count}",
-    "accessRequired": "Access is required",
     "saveAndFollow": "Save and continue",
     "erase": "Erase",
     "yes": "Yes",
@@ -53,7 +50,7 @@
     "lastName": "Last Name",
     "email": "Email",
     "phone": "Phone",
-    "address": "Address",
+    "location": "Location",
     "active": "Active",
     "actions": "Actions"
   },
@@ -71,14 +68,13 @@
     "playerMode": "Player mode",
     "gameMode": "Game mode",
     "tournamentType": "Tournament type",
-    "sets": "Tables per match",
-    "finalSet": "Final match tables",
+    "sets": "Sets per table",
+    "finalSet": "Final set",
     "emailReminder": "email reminder to registrants",
     "access": "Access",
     "public": "Public",
     "private": "Private",
     "tournamentValue": "Tournament Value",
-    "tournamentValueDescription": "(enter value in USD)",
-    "tournamentCreated": "Tournament created"
+    "tournamentValueDescription": "(enter value in USD)"
   }
 }

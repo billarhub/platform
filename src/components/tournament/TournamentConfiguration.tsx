@@ -3,39 +3,21 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Input } from '../common/Input';
-import { ITournamentConfiguration, OptionType } from '@/models';
+import { ITournamentConfiguration } from '@/models';
 import InputSubtitle from '../common/InputSubtitle';
 import Button from '../common/Button';
 import ControlledRadioGroup from '../common/controlled/ControlledRadioGroup';
-import { Select } from '../common/Select';
-import { numberOfPlayers } from '@/static/numberOfPlayers';
-import {
-  useCreateTournament,
-} from '@/hooks/api/tournament';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import SpinnerIcon from '../icon/SpinnerIcon';
-import TournamentTypeSelect from './TournamentTypeSelect';
 interface TournamentConfigurationProps {
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
   goNext: () => void;
-  token: string;
 }
 
 function TournamentConfiguration({
   setSelectedIndex,
   goNext,
-  token,
 }: TournamentConfigurationProps) {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
-  const notify = (type: 'success' | 'error') => {
-    if (type === 'success') {
-      toast.success(tournmaentTranslation('tournamentCreated'));
-    } else if (type === 'error') {
-      toast.error('Error');
-    }
-  };
   const emailReminderOptions = [
     { id: 1, value: true, label: commonTranslations('yes') },
     { id: 2, value: false, label: commonTranslations('no') },
@@ -44,72 +26,42 @@ function TournamentConfiguration({
     { id: 1, value: 'public', label: tournmaentTranslation('public') },
     { id: 2, value: 'private', label: tournmaentTranslation('private') },
   ];
-
-  const {
-    mutateAsync,
-    isLoading,
-    isError: isCreateTournamentError,
-    error: createTournamentError,
-  } = useCreateTournament(token);
-
   const {
     control,
     register,
     formState: { errors },
     reset,
     handleSubmit,
-    setValue,
-    watch,
+    trigger,
   } = useFormContext<ITournamentConfiguration>();
-
   const resetForm = () => {
     reset({
       name: '',
-      playersQuantity: 0,
-      location: '',
-      initDate: '',
+      players: 0,
+      place: '',
+      startDate: '',
       endDate: '',
       playerMode: '',
       gameMode: '',
-      tournamentTypeId: '',
-      qtySetPerTable: 1,
-      qtySetPerFinal: 1,
-      emailRemember: false,
+      tournamentType: '',
+      sets: 0,
+      finalSet: 0,
+      emailNotificacion: false,
       access: '',
-      moneyPrice: '0',
+      tournamentValue: '',
     });
   };
-
-  const onSubmit = async (data: ITournamentConfiguration) => {
-    try {
-      
-      const response = await mutateAsync(data);
-      if (
-        response &&
-        response.data &&
-        response.data.data &&
-        response.data.data.tournamentId
-      ) {
-        sessionStorage.setItem(
-          'currentTournamentId',
-          response.data.data.tournamentId
-        );
-        notify('success');
-        goNext();
-      }
-      // console.log(response);
-    } catch (error) {
-      notify('error');
-      console.log(error);
+  const onSubmit = async () => {
+    const isStepValid = await trigger();
+    if (isStepValid) {
+      goNext();
     }
   };
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       className="py-5 flex flex-col gap-4"
     >
-      <ToastContainer />
       <InputSubtitle subtitle={tournmaentTranslation('TournamentName')}>
         <Input
           {...register('name')}
@@ -125,18 +77,26 @@ function TournamentConfiguration({
           className="w-full"
           subtitle={tournmaentTranslation('playersNumber')}
         >
-          <Select options={numberOfPlayers} />
+          <Input
+            {...register('players')}
+            name="players"
+            className="w-full"
+            inputClassName="placeholder:font-base uppercase"
+            error={errors?.players?.message}
+            type="number"
+            min="0"
+          />
         </InputSubtitle>
         <InputSubtitle
           className="w-full"
           subtitle={tournmaentTranslation('place')}
         >
           <Input
-            {...register('location')}
-            name="location"
+            {...register('place')}
+            name="place"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.location?.message}
+            error={errors?.place?.message}
           />
         </InputSubtitle>
       </div>
@@ -147,15 +107,12 @@ function TournamentConfiguration({
           subtitle={tournmaentTranslation('startDate')}
         >
           <Input
-            {...register('initDate')}
-            name="initDate"
+            {...register('startDate')}
+            name="startDate"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.initDate?.message}
+            error={errors?.startDate?.message}
             type="date"
-            pattern="\d{2}-\d{2}-\d{4}"
-            min={new Date().toISOString().slice(0, 16)}
-            max="9999-12-31T23:59"
           />
         </InputSubtitle>
         <InputSubtitle
@@ -171,8 +128,6 @@ function TournamentConfiguration({
             inputClassName="placeholder:font-base uppercase"
             error={errors?.endDate?.message}
             type="date"
-            pattern="\d{2}-\d{2}-\d{4}"
-            min={watch('initDate')}
           />
         </InputSubtitle>
       </div>
@@ -207,10 +162,12 @@ function TournamentConfiguration({
           className="w-full"
           subtitle={tournmaentTranslation('tournamentType')}
         >
-          <TournamentTypeSelect
-            token={token}
-            error={errors?.tournamentTypeId?.message}
-            setValue={setValue}
+          <Input
+            {...register('tournamentType')}
+            name="tournamentType"
+            className="w-full"
+            inputClassName="placeholder:font-base uppercase"
+            error={errors?.tournamentType?.message}
           />
         </InputSubtitle>
         <InputSubtitle
@@ -218,15 +175,13 @@ function TournamentConfiguration({
           subtitle={tournmaentTranslation('sets')}
         >
           <Input
-            {...register('qtySetPerTable', {
-              setValueAs: (value) => parseInt(value),
-            })}
-            name="qtySetPerTable"
+            {...register('sets')}
+            name="sets"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.qtySetPerTable?.message}
+            error={errors?.sets?.message}
             type="number"
-            min="1"
+            min="0"
           />
         </InputSubtitle>
         <InputSubtitle
@@ -234,24 +189,22 @@ function TournamentConfiguration({
           subtitle={tournmaentTranslation('finalSet')}
         >
           <Input
-            {...register('qtySetPerFinal', {
-              setValueAs: (value) => parseInt(value),
-            })}
-            name="qtySetPerFinal"
+            {...register('finalSet')}
+            name="finalSet"
             className="w-full"
             inputClassName="placeholder:font-base uppercase"
-            error={errors?.qtySetPerFinal?.message}
+            error={errors?.finalSet?.message}
             type="number"
-            min="1"
+            min="0"
           />
         </InputSubtitle>
       </div>
       <ControlledRadioGroup
         control={control}
-        name="emailRemember"
+        name="emailNotificacion"
         label={tournmaentTranslation('emailReminder')}
         options={emailReminderOptions}
-        error={errors?.emailRemember}
+        error={errors?.emailNotificacion}
       />
       <ControlledRadioGroup
         control={control}
@@ -268,13 +221,11 @@ function TournamentConfiguration({
         )}
       >
         <Input
-          {...register('moneyPrice', {
-            setValueAs: (value) => parseInt(value),
-          })}
-          name="moneyPrice"
+          {...register('tournamentValue')}
+          name="tournamentValue"
           className="w-full"
           inputClassName="placeholder:font-base uppercase"
-          error={errors?.moneyPrice?.message}
+          error={errors?.tournamentValue?.message}
           leftIcon="$"
           type="number"
           min="0"
@@ -287,12 +238,8 @@ function TournamentConfiguration({
         >
           {commonTranslations('erase')}
         </Button>
-        <Button className="w-full lg:w-auto" type="submit">
-          {isLoading ? (
-            <SpinnerIcon className="m-auto w-10 h-10 text-gray-200 animate-spin fill-primary-300" />
-          ) : (
-            commonTranslations('saveAndFollow')
-          )}
+        <Button className="w-full lg:w-auto" type="button" onClick={onSubmit}>
+          {commonTranslations('saveAndFollow')}
         </Button>
       </div>
     </form>

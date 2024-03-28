@@ -12,10 +12,10 @@ import { PhoneInputModel } from '../common/PhoneInput';
 import ControlledPhoneInput from '../common/controlled/ControlledPhoneInput';
 import { Transition } from '@headlessui/react';
 import LeftArrowIcon from '../icon/LeftArrowIcon';
+import PlayerList from '../player/PlayerList';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
-  columns: any;
   players: ITournamentAddPlayer[];
   setPlayers: React.Dispatch<React.SetStateAction<ITournamentAddPlayer[]>>;
   goNext: () => void;
@@ -24,7 +24,6 @@ interface IPlayerTableProps {
 
 function TournamentAddPlayer({
   handleGoToPage,
-  columns,
   players,
   setPlayers,
   goNext,
@@ -50,7 +49,7 @@ function TournamentAddPlayer({
         {
           firstName: getValues('firstName'),
           lastName: getValues('lastName'),
-          location: getValues('location'),
+          address: getValues('address'),
           email: getValues('email'),
           phone: getValues('phone'),
           active: true,
@@ -59,7 +58,7 @@ function TournamentAddPlayer({
       reset({
         firstName: '',
         lastName: '',
-        location: '',
+        address: '',
         email: '',
         phone: '',
       });
@@ -129,13 +128,13 @@ function TournamentAddPlayer({
                   </div>
 
                   <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
-                    <InputSubtitle subtitle={t('location')}>
+                    <InputSubtitle subtitle={t('address')}>
                       <Input
-                        {...register(`location`)}
-                        name="location"
+                        {...register(`address`)}
+                        name="address"
                         className="w-full"
                         inputClassName="placeholder:font-base uppercase"
-                        error={errors?.location?.message}
+                        error={errors?.address?.message}
                       />
                     </InputSubtitle>
                     <InputSubtitle subtitle={t('email')}>
@@ -176,14 +175,19 @@ function TournamentAddPlayer({
           </>
         )}
       </Accordion>
-      <PlayerTable
+      {/* <PlayerTable
         data={players}
         handleGoToPage={handleGoToPage}
         columns={columns}
-      />
+      /> */}
+      <PlayerList players={players} handleGoToPage={handleGoToPage} />
+
       <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-5 py-10">
         <div className="flex justify-between items-center gap-2">
-          <Button className="w-10 h-10 lg:w-auto bg-black hover:bg-black/80 focus:bg-black" onClick={goBack}>
+          <Button
+            className="w-10 h-10 lg:w-auto bg-black hover:bg-black/80 focus:bg-black"
+            onClick={goBack}
+          >
             <LeftArrowIcon className="w-6 h-6 text-white font-bold" />
           </Button>
           <Button

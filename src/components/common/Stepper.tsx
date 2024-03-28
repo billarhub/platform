@@ -67,10 +67,10 @@ function Stepper({
           </div>
         ))}
       </Tab.List>
-      <Tab.Panels className="flex w-full mt-2 p-2 sm:p-5 md:p-10 overflow-x-auto h-full">
+      <Tab.Panels className="mt-2 p-2 sm:p-5 md:p-10 overflow-x-auto h-full">
         {steps.map((step, index) => (
-          <Tab.Panel key={index}>
-            <div className="w-full mb-10">
+          <Tab.Panel key={index} className="w-full h-full">
+            <div className="mb-10">
               <h1 className="pb-5 md:pb-12 font-bold uppercase md:text-4xl text-lg text-black">
                 {mainTitle}
               </h1>

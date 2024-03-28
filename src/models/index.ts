@@ -19,13 +19,18 @@ export type Steps = {
 export type Player = {
     firstName: string;
     lastName: string;
-    location: string;
+    address: string;
     email: string;
     phone: string;
     active: boolean;
     _id: string;
     createdAt: string;
     updatedAt: string;
+};
+
+export type OptionType = {
+    label: string;
+    value: string | number;
 };
 export interface IRoute {
     text: string;
@@ -46,24 +51,24 @@ export interface ILoginPayload {
 
 export interface ITournamentConfiguration {
     name: string;
-    players: number;
-    place: string;
-    startDate: string;
+    playersQuantity: number;
+    location: string;
+    initDate: string;
     endDate: string;
     playerMode: string;
     gameMode: string;
-    tournamentType: string;
-    sets: number;
-    finalSet: number;
-    emailNotificacion: boolean;
+    tournamentTypeId: string;
+    qtySetPerTable: number;
+    qtySetPerFinal: number;
+    emailRemember: boolean;
     access: string;
-    tournamentValue: string;
+    moneyPrice: string;
 }
 
 export interface ITournamentAddPlayer {
     firstName: string;
     lastName: string;
-    location: string;
+    address: string;
     email: string;
     phone: string;
     active: boolean;
@@ -83,4 +88,12 @@ export interface IUser {
     email: string;
     phone: string;
     role: string;
+}
+
+export interface ILoginInterfaceResponse {
+    timestamp: string;
+    data: {
+        token: string;
+        refreshToken: string;
+    }
 }

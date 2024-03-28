@@ -13,6 +13,8 @@ import PasswordIcon from '../icon/PasswordIcon';
 import { jwtDecode } from 'jwt-decode';
 import { createSession } from '@/app/actions';
 import { useRouter } from 'next/navigation';
+import { useSignIn } from '@/hooks/api/auth';
+import SpinnerIcon from '../icon/SpinnerIcon';
 
 interface ILoginFormProps {
   locale: string;
@@ -23,6 +25,7 @@ function LoginForm({ locale }: ILoginFormProps) {
   const loginTranslation = useTranslations('Login');
   const commonTranslations = useTranslations('Common');
   const loginFormSchema = createLoginFormSchema(commonTranslations);
+  const { isLoading, isError, error, mutateAsync: signIn } = useSignIn();
   const {
     handleSubmit,
     register,
@@ -39,26 +42,18 @@ function LoginForm({ locale }: ILoginFormProps) {
     try {
       let authToken;
       let jwtDecoded;
-      const res = await fetch(
-        'https://dev-api-billarhub.onrender.com/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-          }),
-        }
-      );
 
-      authToken = await res.json();
+      const response = await signIn({
+        email: data.email.toLowerCase(),
+        password: data.password,
+      });
 
-      jwtDecoded = jwtDecode(authToken.data.token) as IDecodedJwt;
+      authToken = response.data.token;
+
+      jwtDecoded = jwtDecode(authToken) as IDecodedJwt;
 
       const userResponse = await fetch(
-        `https://dev-api-billarhub.onrender.com/user/${jwtDecoded.userId}`,
+        `${process.env.NEXT_PUBLIC_API_KEY}/user/${jwtDecoded?.userId}`,
         {
           method: 'GET',
           headers: {
@@ -68,12 +63,14 @@ function LoginForm({ locale }: ILoginFormProps) {
       );
 
       const user = await userResponse.json();
-      await createSession(authToken.data.token, user.data.data.user);
+      await createSession(authToken, user?.data?.data?.user);
       router.push(`/${locale}/dashboard`);
     } catch (err) {
       console.log(err);
     }
   };
+
+  isError && <p>{JSON.stringify(error)}</p>;
 
   return (
     <div className="w-screen md:w-full h-full flex justify-center items-center p-4 md:p-0">
@@ -90,7 +87,7 @@ function LoginForm({ locale }: ILoginFormProps) {
             {...register('email')}
             name="email"
             className="w-full"
-            inputClassName="placeholder:font-base uppercase"
+            inputClassName="placeholder:font-base"
             leftIcon={<UserIcon className="w-8 h-8 rounded-md" />}
             error={errors?.email?.message}
           />
@@ -100,7 +97,7 @@ function LoginForm({ locale }: ILoginFormProps) {
             name="password"
             className="w-full"
             type="password"
-            inputClassName="placeholder:font-base uppercase"
+            inputClassName="placeholder:font-base"
             leftIcon={<PasswordIcon className="w-8 h-8 rounded-md" />}
             error={errors?.password?.message}
           />
@@ -108,7 +105,11 @@ function LoginForm({ locale }: ILoginFormProps) {
             type="submit"
             className="md:w-1/3 md:text-lg text-md rounded-3xl"
           >
-            {loginTranslation('submit')}
+            {isLoading ? (
+              <SpinnerIcon className="m-auto w-10 h-10 text-gray-200 animate-spin fill-primary-300" />
+            ) : (
+              loginTranslation('submit')
+            )}
           </Button>
         </form>
       </Card>

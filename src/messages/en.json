@@ -79,6 +79,7 @@
     "private": "Private",
     "tournamentValue": "Tournament Value",
     "tournamentValueDescription": "(enter value in USD)",
-    "tournamentCreated": "Tournament created"
+    "tournamentCreated": "Tournament created",
+    "tournamentSummary": "Tournament summary"
   }
 }

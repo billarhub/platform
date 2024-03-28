@@ -153,7 +153,7 @@ function TournamentConfiguration({
             inputClassName="placeholder:font-base uppercase"
             error={errors?.initDate?.message}
             type="date"
-            pattern="\d{2}-\d{2}-\d{4}"
+            // pattern="\d{2}-\d{2}-\d{4}"
             min={new Date().toISOString().slice(0, 16)}
             max="9999-12-31T23:59"
           />
@@ -171,7 +171,7 @@ function TournamentConfiguration({
             inputClassName="placeholder:font-base uppercase"
             error={errors?.endDate?.message}
             type="date"
-            pattern="\d{2}-\d{2}-\d{4}"
+            // pattern="\d{2}-\d{2}-\d{4}"
             min={watch('initDate')}
           />
         </InputSubtitle>

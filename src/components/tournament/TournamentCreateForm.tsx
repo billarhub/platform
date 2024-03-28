@@ -17,6 +17,7 @@ import {
 } from '@/lib/schemas/tournamentSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import TournamentConfirmation from './TournamentConfirmation';
+import TournamentSummary from './TournamentSummary';
 
 interface ITournamentCreateFormProps {
   token: string;
@@ -101,9 +102,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
       label: tournmaentTranslation('confirmation'),
       icon: CheckCircleIcon,
       component: (
-        <p className="text-black" key="confirmacion">
-          Confirmación Content...
-        </p>
+        <TournamentSummary token={token} goNext={goNext} />
       ),
     },
     {
@@ -119,7 +118,6 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
         <Stepper
           selectedIndex={selectedIndex}
           setSelectedIndex={setSelectedIndex}
-          // panels={panels}
           steps={steps}
           ariaLabel="tournament-tabs"
           mainTitle={tournmaentTranslation('title')}

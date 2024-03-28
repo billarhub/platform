@@ -18,6 +18,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '../common/Button';
 import TrashIcon from '../icon/TrashIcon';
+import TournamentConfirmation from './TournamentConfirmation';
 
 function TournamentCreateForm() {
   const tournmaentTranslation = useTranslations('Tournament');
@@ -142,11 +143,7 @@ function TournamentCreateForm() {
     {
       label: tournmaentTranslation('draw'),
       icon: BallEightIcon,
-      component: (
-        <p className="text-black" key="sorteo">
-          Sorteo Content...
-        </p>
-      ),
+      component: <TournamentConfirmation />,
     },
   ];
 

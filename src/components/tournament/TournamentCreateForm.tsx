@@ -2,8 +2,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
-import { createColumnHelper } from '@tanstack/react-table';
-import { ITournamentAddPlayer, OptionType, Player } from '@/models';
+import { ITournamentAddPlayer } from '@/models';
 import TournamentConfiguration from './TournamentConfiguration';
 import Stepper from '../common/Stepper';
 import BallEightIcon from '../icon/BallEightIcon';

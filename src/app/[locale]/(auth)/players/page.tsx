@@ -2,7 +2,7 @@ import React from 'react';
 import PlayerList from '@/components/player/PlayerList';
 
 function PlayersPages() {
-  return <PlayerList />;
+  return <div>PlayersList</div>;
 }
 
 export default PlayersPages;

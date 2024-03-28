@@ -41,6 +41,9 @@
     "invalidEmail": "Introduce un correo válido",
     "passwordMinLength": "La contraseña debe contener al menos 8 caracteres",
     "nameMinLength": "El nombre de usuario debe tener al menos 3 caracteres",
+    "minCharacters": "Se requieren al menos {count} caracteres",
+    "minValue": "El valor mínimo es {count}",
+    "accessRequired": "El acceso es obligatorio.",
     "saveAndFollow": "Guardar y seguir",
     "erase": "Borrar",
     "yes": "Sí",
@@ -50,7 +53,7 @@
     "lastName": "Apellido",
     "email": "Correo electrónico",
     "phone": "Teléfono",
-    "location": "Ubicación",
+    "address": "Dirección",
     "active": "Activo",
     "actions": "Acciones"
   },
@@ -68,13 +71,14 @@
     "playerMode": "Modalidad jugador",
     "gameMode": "Modalidad de juego",
     "tournamentType": "Tipo de torneo",
-    "sets": "Sets por mesa",
-    "finalSet": "Set de la final",
+    "sets": "Mesas por partida",
+    "finalSet": "Mesas de la final",
     "emailReminder": "recordatorio de correo electrónico a inscritos",
     "access": "Acceso",
     "public": "Público",
     "private": "Privado",
     "tournamentValue": "Valor del torneo",
-    "tournamentValueDescription": "(ingresar valor en usd)"
+    "tournamentValueDescription": "(ingresar valor en usd)",
+    "tournamentCreated": "Torneo creado"
   }
 }

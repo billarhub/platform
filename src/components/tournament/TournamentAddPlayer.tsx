@@ -13,6 +13,8 @@ import ControlledPhoneInput from '../common/controlled/ControlledPhoneInput';
 import { Transition } from '@headlessui/react';
 import LeftArrowIcon from '../icon/LeftArrowIcon';
 import PlayerList from '../player/PlayerList';
+import { playerRoleId } from '@/static/roles';
+import { useAddPlayerToTournament } from '@/hooks/api/tournament';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
@@ -20,6 +22,7 @@ interface IPlayerTableProps {
   setPlayers: React.Dispatch<React.SetStateAction<ITournamentAddPlayer[]>>;
   goNext: () => void;
   goBack: () => void;
+  token: string;
 }
 
 function TournamentAddPlayer({
@@ -28,6 +31,7 @@ function TournamentAddPlayer({
   setPlayers,
   goNext,
   goBack,
+  token,
 }: IPlayerTableProps) {
   const t = useTranslations('Common');
   const {
@@ -37,32 +41,44 @@ function TournamentAddPlayer({
     trigger,
     reset,
     getValues,
+    handleSubmit,
   } = useFormContext<ITournamentAddPlayer>();
+
+  const { mutate } = useAddPlayerToTournament(
+    token,
+    sessionStorage.getItem('currentTournamentId') || ''
+  );
 
   const [key, setKey] = React.useState(0);
 
   const onAddPlayer = async () => {
     const isStepValid = await trigger();
     if (isStepValid) {
-      setPlayers([
-        ...players,
-        {
-          firstName: getValues('firstName'),
-          lastName: getValues('lastName'),
-          address: getValues('address'),
-          email: getValues('email'),
-          phone: getValues('phone'),
-          active: true,
+      const newPlayer = {
+        firstName: getValues('firstName'),
+        lastName: getValues('lastName'),
+        documentId: getValues('documentId'),
+        role: playerRoleId,
+        email: getValues('email'),
+        phone: getValues('phone'),
+      };
+
+      mutate(newPlayer, {
+        onSuccess: () => {
+          setPlayers([...players, newPlayer]);
+          reset({
+            firstName: '',
+            lastName: '',
+            documentId: '',
+            email: '',
+            phone: '',
+          });
+          setKey((prevKey) => prevKey + 1);
         },
-      ]);
-      reset({
-        firstName: '',
-        lastName: '',
-        address: '',
-        email: '',
-        phone: '',
+        onError: (error) => {
+          console.error('Error adding player:', error);
+        },
       });
-      setKey((prevKey) => prevKey + 1);
     }
   };
 
@@ -72,12 +88,12 @@ function TournamentAddPlayer({
 
   const onSubmit = () => {
     console.log(players);
-    goNext();
+    //goNext();
   };
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col justify-center items-center"
     >
       <Accordion
@@ -128,13 +144,13 @@ function TournamentAddPlayer({
                   </div>
 
                   <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
-                    <InputSubtitle subtitle={t('address')}>
+                    <InputSubtitle subtitle={t('documentId')}>
                       <Input
-                        {...register(`address`)}
-                        name="address"
+                        {...register(`documentId`)}
+                        name="documentId"
                         className="w-full"
                         inputClassName="placeholder:font-base uppercase"
-                        error={errors?.address?.message}
+                        error={errors?.documentId?.message}
                       />
                     </InputSubtitle>
                     <InputSubtitle subtitle={t('email')}>

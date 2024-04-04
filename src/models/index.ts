@@ -68,10 +68,10 @@ export interface ITournamentConfiguration {
 export interface ITournamentAddPlayer {
     firstName: string;
     lastName: string;
-    address: string;
+    documentId: string;
     email: string;
     phone: string;
-    active: boolean;
+    role: string;
 }
 
 export interface IDecodedJwt {

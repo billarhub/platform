@@ -86,7 +86,7 @@ export function PhoneInputModel({
           />
         </div>
       </div>
-      {error ? <p className="text-xs text-danger-300 mb-3">{error}</p> : null}
+      {error ? <p className="text-xs text-red-600 mb-3">{error}</p> : null}
     </label>
   );
 }

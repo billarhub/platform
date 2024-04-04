@@ -94,6 +94,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
           key="players"
           goNext={goNext}
           goBack={goBack}
+          token={token}
         />
       ),
     },

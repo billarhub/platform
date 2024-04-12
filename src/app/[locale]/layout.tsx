@@ -1,8 +1,11 @@
 import React from 'react';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { ToastContainer } from 'react-toastify';
 import { cookies } from 'next/headers';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { IUser } from '@/models';
+import { NotifyProvider } from '@/contexts/NotifyContext';
+import 'react-toastify/dist/ReactToastify.css';
 import FooterLogo from '@/components/common/FooterLogo';
 import Header from '@/components/common/Header';
 import Provider from '@/components/common/Provider';
@@ -24,15 +27,18 @@ export default function ContentLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Provider>
-        <Header userName={userName} session={session} locale={locale} />
+      <NotifyProvider>
+        <Provider>
+          <Header userName={userName} session={session} locale={locale} />
 
-        <main className="flex-grow">
-          <div className="flex flex-col h-full">{children}</div>
-        </main>
+          <main className="flex-grow">
+            <div className="flex flex-col h-full">{children}</div>
+          </main>
 
-        <FooterLogo />
-      </Provider>
+          <FooterLogo />
+          <ToastContainer />
+        </Provider>
+      </NotifyProvider>
     </NextIntlClientProvider>
   );
 }

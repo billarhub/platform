@@ -45,7 +45,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, handleGoToPage }) => {
           key={index}
           className="flex justify-stretch my-5 bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-lg gap-5"
         >
-          <AvatarLetter name={player.firstName} />
+          <AvatarLetter name={player.firstName} lastName={player.lastName} />
           <div className="text-left flex-1" id="player-info">
             <h2 className="text-black text-xl font-bold">
               {player.firstName} {player.lastName}

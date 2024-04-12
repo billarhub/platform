@@ -1,20 +1,22 @@
 import React from 'react';
-import PlayerTable from '../player/PlayerTable';
 import Button from '../common/Button';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { ITournamentAddPlayer } from '@/models';
 import Accordion from '../common/accordion/Accordion';
 import ChevronDownIcon from '../icon/ChevronDownIcon';
 import { Input } from '../common/Input';
 import { useTranslations } from 'next-intl';
 import InputSubtitle from '../common/InputSubtitle';
-import { PhoneInputModel } from '../common/PhoneInput';
 import ControlledPhoneInput from '../common/controlled/ControlledPhoneInput';
 import { Transition } from '@headlessui/react';
 import LeftArrowIcon from '../icon/LeftArrowIcon';
 import PlayerList from '../player/PlayerList';
 import { playerRoleId } from '@/static/roles';
-import { useAddPlayerToTournament } from '@/hooks/api/tournament';
+import {
+  useAddPlayerToTournament,
+  useGetTournamentById,
+} from '@/hooks/api/tournament';
+import SpinnerIcon from '../icon/SpinnerIcon';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
@@ -44,12 +46,16 @@ function TournamentAddPlayer({
     handleSubmit,
   } = useFormContext<ITournamentAddPlayer>();
 
-  const { mutate } = useAddPlayerToTournament(
+  const tournamentId = sessionStorage.getItem('currentTournamentId');
+  const { data, isLoading, isError } = useGetTournamentById(
     token,
-    sessionStorage.getItem('currentTournamentId') || ''
+    tournamentId || ''
   );
 
+  const { mutate } = useAddPlayerToTournament(token, tournamentId || '');
+
   const [key, setKey] = React.useState(0);
+  const [addPlayerLoading, setAddPlayerLoading] = React.useState(false);
 
   const onAddPlayer = async () => {
     const isStepValid = await trigger();
@@ -62,7 +68,7 @@ function TournamentAddPlayer({
         email: getValues('email'),
         phone: getValues('phone'),
       };
-
+      setAddPlayerLoading(true);
       mutate(newPlayer, {
         onSuccess: () => {
           setPlayers([...players, newPlayer]);
@@ -74,9 +80,11 @@ function TournamentAddPlayer({
             phone: '',
           });
           setKey((prevKey) => prevKey + 1);
+          setAddPlayerLoading(false);
         },
         onError: (error) => {
           console.error('Error adding player:', error);
+          setAddPlayerLoading(false);
         },
       });
     }
@@ -87,9 +95,16 @@ function TournamentAddPlayer({
   };
 
   const onSubmit = () => {
-    console.log(players);
-    //goNext();
+    goNext();
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || !data) {
+    return <div>Error loading tournament data</div>;
+  }
 
   return (
     <form
@@ -182,7 +197,11 @@ function TournamentAddPlayer({
                       type="button"
                       onClick={onAddPlayer}
                     >
-                      {t('addPlayer')}
+                      {addPlayerLoading ? (
+                        <SpinnerIcon className="m-auto w-10 h-10 text-gray-200 animate-spin fill-primary-300" />
+                      ) : (
+                        t('addPlayer')
+                      )}
                     </Button>
                   </div>
                 </div>

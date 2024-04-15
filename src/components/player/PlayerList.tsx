@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { ITournamentAddPlayer } from '@/models';
+import AvatarLetter from '../common/AvatarLetter';
 
 interface PlayerListProps {
   players: ITournamentAddPlayer[];
@@ -38,15 +39,23 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, handleGoToPage }) => {
   };
 
   return (
-    <div>
+    <div className="w-full h-full">
       {currentPlayers.map((player, index) => (
-        <div key={index} className="card flex justify-between items-center gap-5">
-          <h2 className="text-black">
-            {player.firstName} {player.lastName}
-          </h2>
-          <p className="text-black">{player.address}</p>
-          <p className="text-black">{player.email}</p>
-          <p className="text-black">{player.phone}</p>
+        <div
+          key={index}
+          className="flex justify-stretch my-5 bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-lg gap-5"
+        >
+          <AvatarLetter name={player.firstName} lastName={player.lastName} />
+          <div className="text-left flex-1" id="player-info">
+            <h2 className="text-black text-xl font-bold">
+              {player.firstName} {player.lastName}
+            </h2>
+            <p className="text-black">{player.documentId}</p>
+            <p className="text-black">{player.email}</p>
+            <p className="text-black">
+              +{player.phone.substring(0, 2)} {player.phone.substring(2)}
+            </p>
+          </div>
         </div>
       ))}
       <div className="pagination">{renderPageNumbers}</div>

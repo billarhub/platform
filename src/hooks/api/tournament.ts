@@ -1,4 +1,4 @@
-import { ITournamentConfiguration } from '@/models';
+import { ITournamentAddPlayer, ITournamentConfiguration } from '@/models';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -93,4 +93,35 @@ export function useGetTournamentById(token: string, id: string) {
     const error = query.error;
 
     return { ...query, isLoading, isError, error };
+}
+
+export function useAddPlayerToTournament(token: string, id: string) {
+    const mutation = useMutation<any, Error, ITournamentAddPlayer>({
+        mutationFn: async (player: ITournamentAddPlayer) => {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_KEY}/tournament/${id}/add-player`, {
+                firstname: player.firstName,
+                lastname: player.lastName,
+                documentId: player.documentId,
+                email: player.email,
+                phone: player.phone,
+                role: player.role,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        }
+    });
+
+    const isLoading = mutation.status === 'pending';
+    const isError = mutation.status === 'error';
+    const error = mutation.error;
+
+    return { ...mutation, isLoading, isError, error };
 }

@@ -43,6 +43,14 @@
     "nameMinLength": "Username must be at least 3 characters",
     "minCharacters": "Minimum {count} characters required",
     "minValue": "Minimum value is {count}",
+    "lastNameMinLength": "Last name must be at least 3 characters long",
+    "requiredPhoneNumber": "You must enter a phone number",
+    "phoneNumberPrefix": "The number must start with 58 followed by the operator code (412, 414, 424, 426, etc.)",
+    "phoneNumberLength": "The number must contain 10 digits. Example: (412)-1234567",
+    "documentIdMinLength": "Document ID must be at least 3 characters long",
+    "requiredDocumentNumber": "Enter a valid document number",
+    "documentNumberLength": "Enter a valid identity number",
+    "documentNumberDigits": "The document number must contain only numbers",
     "accessRequired": "Access is required",
     "saveAndFollow": "Save and continue",
     "erase": "Erase",
@@ -55,6 +63,7 @@
     "phone": "Phone",
     "address": "Address",
     "active": "Active",
+    "documentId": "Identity document",
     "actions": "Actions"
   },
   "Tournament": {

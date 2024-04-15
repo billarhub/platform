@@ -43,6 +43,14 @@
     "nameMinLength": "El nombre de usuario debe tener al menos 3 caracteres",
     "minCharacters": "Se requieren al menos {count} caracteres",
     "minValue": "El valor mínimo es {count}",
+    "lastNameMinLength": "El apellido debe tener al menos 3 caracteres",
+    "requiredPhoneNumber": "Debe ingresar un número de teléfono",
+    "phoneNumberPrefix": "El número debe empezar con 58 y seguir con el código de operadora (412, 414, 424, 426, etc.)",
+    "phoneNumberLength": "El número debe contener 10 digitos. Ejemplo: (412)-1234567",
+    "documentIdMinLength": "El ID del documento debe tener al menos 3 caracteres",
+    "requiredDocumentNumber": "Introduce un número de documento válido",
+    "documentNumberLength": "Introduce un número de identidad válido",
+    "documentNumberDigits": "El número de documento debe contener solo números",
     "accessRequired": "El acceso es obligatorio.",
     "saveAndFollow": "Guardar y seguir",
     "erase": "Borrar",
@@ -55,6 +63,7 @@
     "phone": "Teléfono",
     "address": "Dirección",
     "active": "Activo",
+    "documentId": "Documento de identidad",
     "actions": "Acciones"
   },
   "Tournament": {

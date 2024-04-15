@@ -1,5 +1,5 @@
-import { cn } from '@/lib/cn';
 import React from 'react';
+import { cn } from '@/lib/cn';
 
 interface InputSubtitleProps {
   children: React.ReactNode;
@@ -7,6 +7,7 @@ interface InputSubtitleProps {
   className?: string;
   subtitle?: string;
   descriptionSubtitle?: string;
+  descriptionClassName?: string;
 }
 
 function InputSubtitle({
@@ -20,14 +21,13 @@ function InputSubtitle({
     <div className={cn('flex flex-col gap-2 w-full', className)}>
       <h1
         className={cn(
-          'text-black font-bold text-lg uppercase',
+          'text-black font-bold text-lg uppercase overflow-hidden overflow-ellipsis',
           subtitleClassName
         )}
       >
-        {subtitle}
-        {' '}
+        {subtitle}{' '}
         {descriptionSubtitle && (
-          <span className="text-black font-normal text-xs uppercase">
+          <span className="text-black font-normal text-xs uppercase overflow-hidden overflow-ellipsis">
             {descriptionSubtitle}
           </span>
         )}

@@ -59,6 +59,8 @@
     "addPlayer": "Agregar Jugador",
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "firstname": "Nombre",
+    "lastname": "Apellido",
     "email": "Correo electrónico",
     "phone": "Teléfono",
     "address": "Dirección",

@@ -32,7 +32,6 @@ function TournamentVisualizer({
   isLoading,
   tournament,
 }: React.PropsWithChildren<TournamentVisualizerProps>) {
-  console.log('tournament', tournament);
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
   const childrenArray = React.Children.toArray(children);

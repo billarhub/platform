@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useGetTournamentById } from '@/hooks/api/tournament';
 import TournamentVisualizer from './TournamentVisualizer';
 import SpinnerIcon from '../icon/SpinnerIcon';
+import PlayerList from '../player/PlayerList';
 
 interface TournamentSummaryProps {
   token: string;
@@ -35,7 +36,7 @@ function TournamentSummary({
   }
 
   if (isError || !data) {
-    return <div className='text-black'>Error loading tournament data</div>;
+    return <div className="text-black">Error loading tournament data</div>;
   }
 
   const tournament = data?.data.data.tournament
@@ -67,7 +68,9 @@ function TournamentSummary({
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
-      {selectedTab === 'players' && <h1>LISTA DE PLAYERS</h1>}
+      {selectedTab === 'players' && (
+        <PlayerList players={tournament.players} handleGoToPage={() => {}} />
+      )}
     </TournamentVisualizer>
   );
 }

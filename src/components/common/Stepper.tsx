@@ -70,7 +70,7 @@ function Stepper({
       <Tab.Panels className="w-full px-5">
         {steps.map((step, index) => (
           <Tab.Panel key={index} className="w-full h-full">
-            <div className="mb-10">
+            <div className="mt-10 mb-10">
               <h1 className="pb-5 md:pb-12 font-bold uppercase md:text-4xl text-lg text-black">
                 {mainTitle}
               </h1>

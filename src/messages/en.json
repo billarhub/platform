@@ -59,6 +59,8 @@
     "addPlayer": "Add Player",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "firstname": "First Name",
+    "lastname": "Last Name",
     "email": "Email",
     "phone": "Phone",
     "address": "Address",

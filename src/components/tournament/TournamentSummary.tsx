@@ -53,6 +53,7 @@ function TournamentSummary({
         qtySetPerFinal: 5,
         emailRemember: true,
         moneyPrice: 1000,
+        players: []
       };
 
   return (

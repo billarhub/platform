@@ -20,8 +20,6 @@ import SpinnerIcon from '../icon/SpinnerIcon';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
-  players: ITournamentAddPlayer[];
-  setPlayers: React.Dispatch<React.SetStateAction<ITournamentAddPlayer[]>>;
   goNext: () => void;
   goBack: () => void;
   token: string;
@@ -29,8 +27,6 @@ interface IPlayerTableProps {
 
 function TournamentAddPlayer({
   handleGoToPage,
-  players,
-  setPlayers,
   goNext,
   goBack,
   token,
@@ -47,10 +43,19 @@ function TournamentAddPlayer({
   } = useFormContext<ITournamentAddPlayer>();
 
   const tournamentId = sessionStorage.getItem('currentTournamentId');
+  const [players, setPlayers] = React.useState<ITournamentAddPlayer[]>([]);
   const { data, isLoading, isError } = useGetTournamentById(
     token,
     tournamentId || ''
   );
+
+  React.useEffect(() => {
+    if (data?.data.data.tournament?.players) {
+      setPlayers(data.data.data.tournament.players);
+    } else {
+      setPlayers([]);
+    }
+  }, [data]);
 
   const { mutate } = useAddPlayerToTournament(token, tournamentId || '');
 

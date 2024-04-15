@@ -35,7 +35,6 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
     perPage: 10,
   });
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [players, setPlayers] = React.useState<ITournamentAddPlayer[]>([]);
 
   const form = useForm({
     resolver: zodResolver(validationSchema[selectedIndex]),
@@ -57,10 +56,6 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
     if (selectedIndex > 0) {
       setSelectedIndex(selectedIndex - 1);
     }
-  };
-
-  const deletePlayer = (player: ITournamentAddPlayer) => {
-    setPlayers((prevPlayers) => prevPlayers.filter((p) => p !== player));
   };
 
   const handleGoToPage = React.useCallback(
@@ -89,8 +84,6 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
       component: (
         <TournamentAddPlayer
           handleGoToPage={handleGoToPage}
-          players={players}
-          setPlayers={setPlayers}
           key="players"
           goNext={goNext}
           goBack={goBack}
@@ -101,9 +94,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
     {
       label: tournmaentTranslation('confirmation'),
       icon: CheckCircleIcon,
-      component: (
-        <TournamentSummary token={token} goNext={goNext} />
-      ),
+      component: <TournamentSummary token={token} goNext={goNext} />,
     },
     {
       label: tournmaentTranslation('draw'),

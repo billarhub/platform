@@ -92,6 +92,13 @@
     "tournamentValue": "Tournament Value",
     "tournamentValueDescription": "(enter value in USD)",
     "tournamentCreated": "Tournament created",
-    "tournamentSummary": "Tournament summary"
+    "tournamentSummary": "Tournament summary",
+    "single": "Single elimination",
+    "double": "Double elimination",
+    "billar8": "8-ball",
+    "billar9": "9-ball",
+    "billar10": "10-ball",
+    "individual": "Individual",
+    "team": "group"
   }
 }

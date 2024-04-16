@@ -9,9 +9,7 @@ import Button from '../common/Button';
 import ControlledRadioGroup from '../common/controlled/ControlledRadioGroup';
 import { Select } from '../common/Select';
 import { numberOfPlayers } from '@/static/numberOfPlayers';
-import {
-  useCreateTournament,
-} from '@/hooks/api/tournament';
+import { useCreateTournament } from '@/hooks/api/tournament';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SpinnerIcon from '../icon/SpinnerIcon';
@@ -44,6 +42,22 @@ function TournamentConfiguration({
     { id: 1, value: 'public', label: tournmaentTranslation('public') },
     { id: 2, value: 'private', label: tournmaentTranslation('private') },
   ];
+
+  const playerModeOptions = [
+    { value: 'individual', label: tournmaentTranslation('individual') },
+    { value: 'team', label: tournmaentTranslation('team') },
+  ];
+
+  const gameModeOptions = [
+    { value: 'billar8', label: tournmaentTranslation('billar8') },
+    { value: 'billar9', label: tournmaentTranslation('billar9') },
+    { value: 'billar10', label: tournmaentTranslation('billar10') },
+  ];
+
+  React.useEffect(() => {
+    setValue('gameMode', gameModeOptions[0].value);
+    setValue('playerMode', playerModeOptions[0].value);
+  }, []);
 
   const {
     mutateAsync,
@@ -79,10 +93,8 @@ function TournamentConfiguration({
       moneyPrice: '0',
     });
   };
-
   const onSubmit = async (data: ITournamentConfiguration) => {
     try {
-      
       const response = await mutateAsync(data);
       if (
         response &&
@@ -181,11 +193,8 @@ function TournamentConfiguration({
           className="w-full"
           subtitle={tournmaentTranslation('playerMode')}
         >
-          <Input
-            {...register('playerMode')}
-            name="playerMode"
-            className="w-full"
-            inputClassName="placeholder:font-base uppercase"
+          <Select
+            options={playerModeOptions}
             error={errors?.playerMode?.message}
           />
         </InputSubtitle>
@@ -193,13 +202,7 @@ function TournamentConfiguration({
           className="w-full"
           subtitle={tournmaentTranslation('gameMode')}
         >
-          <Input
-            {...register('gameMode')}
-            name="gameMode"
-            className="w-full"
-            inputClassName="placeholder:font-base uppercase"
-            error={errors?.gameMode?.message}
-          />
+          <Select options={gameModeOptions} error={errors?.gameMode?.message} />
         </InputSubtitle>
       </div>
       <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">

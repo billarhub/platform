@@ -92,6 +92,13 @@
     "tournamentValue": "Valor del torneo",
     "tournamentValueDescription": "(ingresar valor en usd)",
     "tournamentCreated": "Torneo creado",
-    "tournamentSummary": "Resumen del torneo"
+    "tournamentSummary": "Resumen del torneo",
+    "single": "Eliminacion directa",
+    "double": "Doble eliminación",
+    "billar8": "Bola 8",
+    "billar9": "Bola 9",
+    "billar10": "Bola 10",
+    "individual": "Individual",
+    "team": "Grupo"
   }
 }

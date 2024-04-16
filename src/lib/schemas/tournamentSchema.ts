@@ -46,6 +46,7 @@ export const createTournamentPlayerSchema = (
                 message: t('documentNumberDigits'),
             })
             .optional(),
+        userFromSelect: z.string().optional(),
     });
 };
 

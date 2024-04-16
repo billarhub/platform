@@ -20,8 +20,6 @@ import SpinnerIcon from '../icon/SpinnerIcon';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
-  players: ITournamentAddPlayer[];
-  setPlayers: React.Dispatch<React.SetStateAction<ITournamentAddPlayer[]>>;
   goNext: () => void;
   goBack: () => void;
   token: string;
@@ -29,8 +27,6 @@ interface IPlayerTableProps {
 
 function TournamentAddPlayer({
   handleGoToPage,
-  players,
-  setPlayers,
   goNext,
   goBack,
   token,
@@ -47,10 +43,19 @@ function TournamentAddPlayer({
   } = useFormContext<ITournamentAddPlayer>();
 
   const tournamentId = sessionStorage.getItem('currentTournamentId');
+  const [players, setPlayers] = React.useState<ITournamentAddPlayer[]>([]);
   const { data, isLoading, isError } = useGetTournamentById(
     token,
     tournamentId || ''
   );
+
+  React.useEffect(() => {
+    if (data?.data.data.tournament?.players) {
+      setPlayers(data.data.data.tournament.players);
+    } else {
+      setPlayers([]);
+    }
+  }, [data]);
 
   const { mutate } = useAddPlayerToTournament(token, tournamentId || '');
 
@@ -61,8 +66,8 @@ function TournamentAddPlayer({
     const isStepValid = await trigger();
     if (isStepValid) {
       const newPlayer = {
-        firstName: getValues('firstName'),
-        lastName: getValues('lastName'),
+        firstname: getValues('firstname'),
+        lastname: getValues('lastname'),
         documentId: getValues('documentId'),
         role: playerRoleId,
         email: getValues('email'),
@@ -73,8 +78,8 @@ function TournamentAddPlayer({
         onSuccess: () => {
           setPlayers([...players, newPlayer]);
           reset({
-            firstName: '',
-            lastName: '',
+            firstname: '',
+            lastname: '',
             documentId: '',
             email: '',
             phone: '',
@@ -138,22 +143,22 @@ function TournamentAddPlayer({
               <Accordion.Panel className="flex flex-row flex-wrap pt-10  w-full">
                 <div className="w-full">
                   <div className="flex flex-col lg:flex-row justify-start items-center md:gap-10">
-                    <InputSubtitle subtitle={t('firstName')}>
+                    <InputSubtitle subtitle={t('firstname')}>
                       <Input
-                        {...register(`firstName`)}
-                        name="firstName"
+                        {...register(`firstname`)}
+                        name="firstname"
                         className="w-full"
                         inputClassName="placeholder:font-base uppercase"
-                        error={errors?.firstName?.message}
+                        error={errors?.firstname?.message}
                       />
                     </InputSubtitle>
-                    <InputSubtitle subtitle={t('lastName')}>
+                    <InputSubtitle subtitle={t('lastname')}>
                       <Input
-                        {...register(`lastName`)}
-                        name={`lastName`}
+                        {...register(`lastname`)}
+                        name={`lastname`}
                         className="w-full"
                         inputClassName="placeholder:font-base uppercase"
-                        error={errors?.lastName?.message}
+                        error={errors?.lastname?.message}
                       />
                     </InputSubtitle>
                   </div>

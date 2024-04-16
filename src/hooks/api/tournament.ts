@@ -99,8 +99,8 @@ export function useAddPlayerToTournament(token: string, id: string) {
     const mutation = useMutation<any, Error, ITournamentAddPlayer>({
         mutationFn: async (player: ITournamentAddPlayer) => {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_KEY}/tournament/${id}/add-player`, {
-                firstname: player.firstName,
-                lastname: player.lastName,
+                firstname: player.firstname.toLowerCase(),
+                lastname: player.lastname.toLowerCase(),
                 documentId: player.documentId,
                 email: player.email,
                 phone: player.phone,

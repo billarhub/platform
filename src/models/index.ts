@@ -66,8 +66,8 @@ export interface ITournamentConfiguration {
 }
 
 export interface ITournamentAddPlayer {
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     documentId: string;
     email: string;
     phone: string;

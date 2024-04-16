@@ -10,7 +10,7 @@ interface PlayerListProps {
 
 const PlayerList: React.FC<PlayerListProps> = ({ players, handleGoToPage }) => {
   const [currentPage, setCurrentPage] = React.useState(1);
-  const playersPerPage = 10; // Change this to your desired number of players per page
+  const playersPerPage = 10;
 
   const indexOfLastPlayer = currentPage * playersPerPage;
   const indexOfFirstPlayer = indexOfLastPlayer - playersPerPage;
@@ -45,10 +45,10 @@ const PlayerList: React.FC<PlayerListProps> = ({ players, handleGoToPage }) => {
           key={index}
           className="flex justify-stretch my-5 bg-white shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-lg gap-5"
         >
-          <AvatarLetter name={player.firstName} lastName={player.lastName} />
+          <AvatarLetter name={player.firstname} lastName={player.lastname} />
           <div className="text-left flex-1" id="player-info">
             <h2 className="text-black text-xl font-bold">
-              {player.firstName} {player.lastName}
+              {player.firstname} {player.lastname}
             </h2>
             <p className="text-black">{player.documentId}</p>
             <p className="text-black">{player.email}</p>

@@ -27,7 +27,6 @@ function TournamentTypeSelect({
     setValue('tournamentTypeId', tournamentTypes[0]?.value.toString());
   }, [tournamentTypes]);
 
-  console.log('tournamentTypes', tournamentTypes);
   return <Select options={tournamentTypes} error={error} />;
 }
 

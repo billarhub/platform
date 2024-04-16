@@ -16,7 +16,7 @@ export const matches = [
         },
         {
           id: '9ea9ce1a-4794-4553-856c-9a3620c0531b',
-          resultText: null,
+          resultText: '0',
           isWinner: true,
           status: null,
           name: 'Ant',

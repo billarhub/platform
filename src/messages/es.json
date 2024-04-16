@@ -80,7 +80,7 @@
     "place": "Lugar",
     "startDate": "Fecha de inicio (dd/mm/aaaa)",
     "endDate": "Fecha de fin (dd/mm/aaaa)      ",
-    "playerMode": "Modalidad jugador",
+    "playerMode": "Modalidad de jugador",
     "gameMode": "Modalidad de juego",
     "tournamentType": "Tipo de torneo",
     "sets": "Mesas por partida",

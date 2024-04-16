@@ -17,6 +17,7 @@ import {
   useGetTournamentById,
 } from '@/hooks/api/tournament';
 import SpinnerIcon from '../icon/SpinnerIcon';
+import Loading from '../common/Loading';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
@@ -104,7 +105,7 @@ function TournamentAddPlayer({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading isFixed={false} />;
   }
 
   if (isError || !data) {

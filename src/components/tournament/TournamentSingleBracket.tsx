@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import {
   SingleEliminationBracket,
   Match,
@@ -35,7 +36,11 @@ const WhiteTheme = createTheme({
   svgBackground: '#fff',
 });
 
-function TournamentSingleBracket() {
+interface ITournamentSingleBracketProps {
+  locale: string;
+}
+
+function TournamentSingleBracket({ locale }: ITournamentSingleBracketProps) {
   const [width, height] = useWindowSize();
   const screenSize = useScreenSize();
   const finalWidth = Math.max(width - 500, screenSize === 'sm' ? 400 : 200);
@@ -43,8 +48,16 @@ function TournamentSingleBracket() {
 
   return (
     <div
-      className={`flex justify-center items-center w-full h-full round-header score max-w-[1000px]`}
+      className={`flex flex-col justify-center items-center w-full h-full round-header score gap-5`}
     >
+      <div className="flex justify-end items-center w-full h-auto">
+        <Link
+          className="text-black underline"
+          href={`/${locale}/tournaments/661974fa275cced67cd75e61/schedule`}
+        >
+          Edit Schedule
+        </Link>
+      </div>
       <SingleEliminationBracket
         matches={matches}
         matchComponent={CustomMatch}

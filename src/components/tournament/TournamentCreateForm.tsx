@@ -20,9 +20,10 @@ import TournamentSummary from './TournamentSummary';
 
 interface ITournamentCreateFormProps {
   token: string;
+  locale: string;
 }
 
-function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
+function TournamentCreateForm({ token, locale }: ITournamentCreateFormProps) {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslation = useTranslations('Common');
   const tournamentConfigSchema =
@@ -99,7 +100,7 @@ function TournamentCreateForm({ token }: ITournamentCreateFormProps) {
     {
       label: tournmaentTranslation('draw'),
       icon: BallEightIcon,
-      component: <TournamentConfirmation />,
+      component: <TournamentConfirmation locale={locale} />,
     },
   ];
 

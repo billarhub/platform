@@ -242,7 +242,7 @@ function TournamentAddPlayer({
                           ? 'bg-gray-300 hover:bg-gray-300 focus:bg-gray-300'
                           : ''
                       } w-full lg:w-auto`}
-                      // disabled={players.length >= playersQty}
+                      disabled={players.length >= playersQty}
                     >
                       {addPlayerLoading ? (
                         <SpinnerIcon className="m-auto w-10 h-10 text-gray-200 animate-spin fill-primary-300" />

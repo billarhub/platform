@@ -196,3 +196,27 @@ export function useTournamentsPagination(currentPage: number, perPage: number) {
 
     return { ...query, isLoading, isError, error };
 }
+
+export function useUpdateTournamentMatch() {
+    const mutation = useMutation<any, Error, { id: string, playerOneScore: number, playerTwoScore: number }>({
+        mutationFn: async (match) => {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_KEY}/match`, {
+                id: match.id,
+                playerOneScore: match.playerOneScore,
+                playerTwoScore: match.playerTwoScore,
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        }
+    });
+
+    const isLoading = mutation.status === 'pending';
+    const isError = mutation.status === 'error';
+    const error = mutation.error;
+
+    return { ...mutation, isLoading, isError, error };
+}

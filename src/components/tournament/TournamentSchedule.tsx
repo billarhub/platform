@@ -4,7 +4,10 @@ import { useTranslations } from 'next-intl';
 import { Transition } from '@headlessui/react';
 import Accordion from '@/components/common/accordion/Accordion';
 import ChevronDownIcon from '@/components/icon/ChevronDownIcon';
-import { useTournamentBracket } from '@/hooks/api/tournament';
+import {
+  useTournamentBracket,
+  useUpdateTournamentMatch,
+} from '@/hooks/api/tournament';
 import SpinnerIcon from '../icon/SpinnerIcon';
 
 interface TournamentScheduleProps {
@@ -24,16 +27,53 @@ function TournamentSchedule({
     isError: bracketError,
   } = useTournamentBracket(tournamentId || '');
 
+  const {
+    mutate: updateMatch,
+    isLoading: isUpdating,
+    isError: updateError,
+  } = useUpdateTournamentMatch();
+
   const matchesResponse = bracketData?.data?.data?.brackets || matches;
 
-  const groupedMatches: Record<string, any[]> = matchesResponse.reduce(
-    (acc: Record<string, any[]>, match: any) => {
-      (acc[match.tournamentRoundText] =
-        acc[match.tournamentRoundText] || []).push(match);
-      return acc;
-    },
-    {}
-  );
+  const [groupedMatches, setGroupedMatches] = React.useState<
+    Record<string, any[]>
+  >({});
+
+  React.useEffect(() => {
+    const grouped = matchesResponse.reduce(
+      (acc: Record<string, any[]>, match: any) => {
+        (acc[match.tournamentRoundText] =
+          acc[match.tournamentRoundText] || []).push(match);
+        return acc;
+      },
+      {}
+    );
+    setGroupedMatches(grouped);
+  }, [matchesResponse]);
+
+  const handleScoreChange = (
+    matchId: string,
+    participantId: string,
+    newScore: number
+  ) => {
+    setGroupedMatches((prevState: any) => {
+      const updatedState = { ...prevState };
+      for (const round in updatedState) {
+        updatedState[round] = updatedState[round].map((match: any) => {
+          if (match.id === matchId) {
+            match.participants = match.participants.map((participant: any) => {
+              if (participant.id === participantId) {
+                participant.resultText = newScore.toString();
+              }
+              return participant;
+            });
+          }
+          return match;
+        });
+      }
+      return updatedState;
+    });
+  };
 
   if (bracketLoading) {
     return (
@@ -43,12 +83,12 @@ function TournamentSchedule({
     );
   }
 
-  if (bracketError || !bracketData) {
+  if (bracketError || !bracketData || updateError) {
     return <div className="text-black">Error loading bracket data</div>;
   }
 
   return (
-    <div className="mt-40 px-96 w-auto min-h-[1222px] bg-white flex flex-col justify-start items-center md:items-center">
+    <div className="mt-40 px-60 w-auto min-h-[1222px] bg-white flex flex-col justify-start items-center md:items-center">
       <div className="w-full flex justify-start items-center my-10">
         <h1 className="text-3xl font-bold text-black uppercase">Schedule</h1>
       </div>
@@ -86,9 +126,13 @@ function TournamentSchedule({
                         </div>
                       );
                     }
-                    const [participant1, participant2] = match.participants;
+                    const participant1 = match.participants[0];
+                    const participant2 = match.participants[1];
+
                     const score1 = parseInt(participant1.resultText);
-                    const score2 = parseInt(participant2.resultText);
+                    const score2 = participant2
+                      ? parseInt(participant2.resultText)
+                      : 0;
 
                     return (
                       <div
@@ -96,19 +140,52 @@ function TournamentSchedule({
                         className="flex justify-between items-center text-black gap-5"
                       >
                         <p>{participant1.name}</p>
-                        <input
-                          type="number"
-                          min="0"
-                          value={Number.isNaN(score1) ? 0 : score1}
-                          className="w-10"
-                        />
-                        <input
-                          type="number"
-                          min="0"
-                          value={Number.isNaN(score2) ? 0 : score2}
-                          className="w-10"
-                        />
-                        <p>{participant2.name}</p>
+                        {participant2 && (
+                          <input
+                            type="number"
+                            min="0"
+                            value={score1}
+                            className="w-10"
+                            onChange={(e) =>
+                              handleScoreChange(
+                                match.id,
+                                participant1.id,
+                                parseInt(e.target.value)
+                              )
+                            }
+                          />
+                        )}
+                        {participant2 && (
+                          <>
+                            <input
+                              type="number"
+                              min="0"
+                              value={score2}
+                              className="w-10"
+                              onChange={(e) =>
+                                handleScoreChange(
+                                  match.id,
+                                  participant2.id,
+                                  parseInt(e.target.value)
+                                )
+                              }
+                            />
+                            <p>{participant2.name}</p>
+                            <button
+                              className="ml-2"
+                              disabled={isUpdating}
+                              onClick={() =>
+                                updateMatch({
+                                  id: match.id,
+                                  playerOneScore: score1,
+                                  playerTwoScore: score2,
+                                })
+                              }
+                            >
+                              Save
+                            </button>
+                          </>
+                        )}
                       </div>
                     );
                   })}

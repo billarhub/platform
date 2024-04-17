@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../common/Button';
-import { useFormContext } from 'react-hook-form';
+import { set, useFormContext } from 'react-hook-form';
 import { ITournamentAddPlayer } from '@/models';
 import Accordion from '../common/accordion/Accordion';
 import ChevronDownIcon from '../icon/ChevronDownIcon';
@@ -17,6 +17,8 @@ import {
   useGetTournamentById,
 } from '@/hooks/api/tournament';
 import SpinnerIcon from '../icon/SpinnerIcon';
+import Loading from '../common/Loading';
+import PlayerSelectAccordion from '../player/PlayerSelectAccordion';
 
 interface IPlayerTableProps {
   handleGoToPage: (value: number) => void;
@@ -39,11 +41,13 @@ function TournamentAddPlayer({
     trigger,
     reset,
     getValues,
+    setValue,
     handleSubmit,
   } = useFormContext<ITournamentAddPlayer>();
 
   const tournamentId = sessionStorage.getItem('currentTournamentId');
   const [players, setPlayers] = React.useState<ITournamentAddPlayer[]>([]);
+  const [playersQty, setPlayersQty] = React.useState<number>(0);
   const { data, isLoading, isError } = useGetTournamentById(
     token,
     tournamentId || ''
@@ -52,11 +56,12 @@ function TournamentAddPlayer({
   React.useEffect(() => {
     if (data?.data.data.tournament?.players) {
       setPlayers(data.data.data.tournament.players);
+      setPlayersQty(data.data.data.tournament.playersQuantity);
     } else {
       setPlayers([]);
+      setPlayersQty(0);
     }
   }, [data]);
-
   const { mutate } = useAddPlayerToTournament(token, tournamentId || '');
 
   const [key, setKey] = React.useState(0);
@@ -65,6 +70,10 @@ function TournamentAddPlayer({
   const onAddPlayer = async () => {
     const isStepValid = await trigger();
     if (isStepValid) {
+      if (players.length >= playersQty) {
+        alert('You cannot add more players');
+        return;
+      }
       const newPlayer = {
         firstname: getValues('firstname'),
         lastname: getValues('lastname'),
@@ -95,6 +104,34 @@ function TournamentAddPlayer({
     }
   };
 
+  const onAddExistingPlayer = async () => {
+    const selectedPlayer = JSON.parse(getValues('userFromSelect'));
+    const newPlayer = {
+      firstname: selectedPlayer.firstname,
+      lastname: selectedPlayer.lastname,
+      documentId: selectedPlayer.documentId,
+      role: playerRoleId,
+      email: selectedPlayer.email,
+      phone: selectedPlayer.phone,
+      _id: selectedPlayer._id,
+    };
+    setAddPlayerLoading(true);
+    mutate(newPlayer, {
+      onSuccess: () => {
+        setPlayers([...players, newPlayer]);
+        reset({
+          userFromSelect: '',
+        });
+        setKey((prevKey) => prevKey + 1);
+        setAddPlayerLoading(false);
+      },
+      onError: (error) => {
+        console.error('Error adding player:', error);
+        setAddPlayerLoading(false);
+      },
+    });
+  };
+
   const deleteAllPlayers = () => {
     setPlayers([]);
   };
@@ -104,7 +141,7 @@ function TournamentAddPlayer({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading isFixed={false} />;
   }
 
   if (isError || !data) {
@@ -198,9 +235,14 @@ function TournamentAddPlayer({
 
                   <div className="w-full py-10 flex justify-end items-center">
                     <Button
-                      className="w-full lg:w-auto"
                       type="button"
                       onClick={onAddPlayer}
+                      className={`${
+                        players.length >= playersQty
+                          ? 'bg-gray-300 hover:bg-gray-300 focus:bg-gray-300'
+                          : ''
+                      } w-full lg:w-auto`}
+                      disabled={players.length >= playersQty}
                     >
                       {addPlayerLoading ? (
                         <SpinnerIcon className="m-auto w-10 h-10 text-gray-200 animate-spin fill-primary-300" />
@@ -215,11 +257,14 @@ function TournamentAddPlayer({
           </>
         )}
       </Accordion>
-      {/* <PlayerTable
-        data={players}
-        handleGoToPage={handleGoToPage}
-        columns={columns}
-      /> */}
+      <PlayerSelectAccordion
+        token={token}
+        players={players}
+        setValue={setValue}
+        playersQty={playersQty}
+        addPlayerLoading={addPlayerLoading}
+        onAddExistingPlayer={onAddExistingPlayer}
+      />
       <PlayerList players={players} handleGoToPage={handleGoToPage} />
 
       <div className="flex w-full flex-col lg:flex-row justify-between items-center gap-5 py-10">
@@ -238,7 +283,16 @@ function TournamentAddPlayer({
             {t('erase')}
           </Button>
         </div>
-        <Button className="w-full lg:w-auto" type="button" onClick={onSubmit}>
+        <Button
+          className={`${
+            players.length < playersQty
+              ? 'bg-gray-300 hover:bg-gray-300 focus:bg-gray-300'
+              : ''
+          } w-full lg:w-auto`}
+          type="button"
+          disabled={players.length < playersQty}
+          onClick={onSubmit}
+        >
           {t('saveAndFollow')}
         </Button>
       </div>

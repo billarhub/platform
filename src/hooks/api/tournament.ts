@@ -125,3 +125,99 @@ export function useAddPlayerToTournament(token: string, id: string) {
 
     return { ...mutation, isLoading, isError, error };
 }
+
+export function useStartTournament(tournamentId: string) {
+    const mutation = useMutation<any, Error, void>({
+        mutationFn: async () => {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_KEY}/tournament/${tournamentId}/start`);
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        }
+    });
+
+    const isLoading = mutation.status === 'pending';
+    const isError = mutation.status === 'error';
+    const error = mutation.error;
+
+    return { ...mutation, isLoading, isError, error };
+}
+
+export function useTournamentBracket(tournamentId: string) {
+    const query = useQuery({
+        queryKey: ['tournamentBracket', tournamentId],
+        queryFn: async () => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_KEY}/match/${tournamentId}/brackets`);
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        },
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false
+    });
+
+    const isLoading = query.status === 'pending';
+    const isError = query.status === 'error';
+    const error = query.error;
+    const refetch = query.refetch;
+
+    return { ...query, isLoading, isError, error, refetch };
+}
+
+export function useTournamentsPagination(currentPage: number, perPage: number) {
+    const query = useQuery({
+        queryKey: ['tournamentsPagination', currentPage, perPage],
+        queryFn: async () => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_KEY}/tournament`, {
+                params: {
+                    currentPage,
+                    perPage
+                }
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        },
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false
+    });
+
+    const isLoading = query.status === 'pending';
+    const isError = query.status === 'error';
+    const error = query.error;
+
+    return { ...query, isLoading, isError, error };
+}
+
+export function useUpdateTournamentMatch() {
+    const mutation = useMutation<any, Error, { id: string, playerOneScore: number, playerTwoScore: number }>({
+        mutationFn: async (match) => {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_KEY}/match`, {
+                id: match.id,
+                playerOneScore: match.playerOneScore,
+                playerTwoScore: match.playerTwoScore,
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        }
+    });
+
+    const isLoading = mutation.status === 'pending';
+    const isError = mutation.status === 'error';
+    const error = mutation.error;
+
+    return { ...mutation, isLoading, isError, error };
+}

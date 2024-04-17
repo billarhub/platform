@@ -53,7 +53,7 @@ function TournamentSummary({
         qtySetPerFinal: 5,
         emailRemember: true,
         moneyPrice: 1000,
-        players: []
+        players: [],
       };
 
   return (
@@ -62,6 +62,7 @@ function TournamentSummary({
       summaryTitle={summaryTitle}
       isLoading={loading}
       tournament={tournament}
+      handleNext={true}
     >
       <></>
       <TournamentVisualizer.Tabs

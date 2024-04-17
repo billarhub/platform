@@ -27,6 +27,7 @@ function Stepper({
         {steps.map((step, index) => (
           <div key={index} className="flex flex-col items-start">
             <Tab
+              // disabled={index !== selectedIndex}
               className={({ selected }) =>
                 `flex items-start text-left ${
                   selected ? 'text-primary-600' : 'text-stepperText'

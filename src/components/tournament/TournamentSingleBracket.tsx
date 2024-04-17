@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import {
   SingleEliminationBracket,
   Match,
@@ -7,8 +8,9 @@ import {
   Match as DefaultMatch,
 } from '@g-loot/react-tournament-brackets';
 import { useWindowSize } from '@/hooks/useWindowSize';
-import { matches } from '@/static/matches';
+// import { matches } from '@/static/matches';
 import useScreenSize from '@/hooks/useScreenSize';
+import { useTranslations } from 'next-intl';
 
 const CustomMatch = (props: any) => {
   return (
@@ -35,16 +37,50 @@ const WhiteTheme = createTheme({
   svgBackground: '#fff',
 });
 
-function TournamentSingleBracket() {
+interface ITournamentSingleBracketProps {
+  locale: string;
+  matches: any;
+  tournamentIdProp?: string;
+}
+
+function TournamentSingleBracket({
+  locale,
+  matches,
+  tournamentIdProp,
+}: ITournamentSingleBracketProps) {
+  const commonTranslation = useTranslations('Common');
   const [width, height] = useWindowSize();
   const screenSize = useScreenSize();
   const finalWidth = Math.max(width - 500, screenSize === 'sm' ? 400 : 200);
   const finalHeight = Math.max(height - 50, 800);
+  const tournamentId = sessionStorage.getItem('currentTournamentId') || tournamentIdProp;
+
+  const handleEditBracket = () => {
+    sessionStorage.setItem('selectedTournamentToEdit', tournamentId || '');
+    sessionStorage.removeItem('currentTournamentId');
+  };
+
+  if (matches.length === 0) {
+    return (
+      <div className="flex justify-center items-center text-black">
+        {commonTranslation('noMatches')}
+      </div>
+    );
+  }
 
   return (
     <div
-      className={`flex justify-center items-center w-full h-full round-header score max-w-[1000px]`}
+      className={`flex flex-col justify-center items-center w-full h-full round-header score gap-5`}
     >
+      <div className="flex justify-end items-center w-full h-auto">
+        <Link
+          className="text-black underline"
+          href={`/${locale}/tournaments/${tournamentId}/schedule`}
+          onClick={handleEditBracket}
+        >
+          {commonTranslation('editBracket')}
+        </Link>
+      </div>
       <SingleEliminationBracket
         matches={matches}
         matchComponent={CustomMatch}

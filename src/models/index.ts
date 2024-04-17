@@ -72,6 +72,7 @@ export interface ITournamentAddPlayer {
     email: string;
     phone: string;
     role: string;
+    userFromSelect?: any;
 }
 
 export interface IDecodedJwt {

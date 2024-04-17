@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import FooterLogo from '@/components/common/FooterLogo';
 import Header from '@/components/common/Header';
 import Provider from '@/components/common/Provider';
+import { TournamentProvider } from '@/contexts/TournamentContext';
 
 export default function ContentLayout({
   children,
@@ -28,16 +29,18 @@ export default function ContentLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <NotifyProvider>
-        <Provider>
-          <Header userName={userName} session={session} locale={locale} />
+        <TournamentProvider>
+          <Provider>
+            <Header userName={userName} session={session} locale={locale} />
 
-          <main className="flex-grow">
-            <div className="flex flex-col h-full">{children}</div>
-          </main>
+            <main className="flex-grow">
+              <div className="flex flex-col h-full">{children}</div>
+            </main>
 
-          <FooterLogo />
-          <ToastContainer />
-        </Provider>
+            <FooterLogo />
+            <ToastContainer />
+          </Provider>
+        </TournamentProvider>
       </NotifyProvider>
     </NextIntlClientProvider>
   );

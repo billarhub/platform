@@ -66,7 +66,10 @@
     "address": "Dirección",
     "active": "Activo",
     "documentId": "Documento de identidad",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "addExistingPlayer": "Agregar jugador existente",
+    "editBracket": "Editar Bracket",
+    "noMatches": "No hay partidos"
   },
   "Tournament": {
     "title": "Creador de torneo",
@@ -80,7 +83,7 @@
     "place": "Lugar",
     "startDate": "Fecha de inicio (dd/mm/aaaa)",
     "endDate": "Fecha de fin (dd/mm/aaaa)      ",
-    "playerMode": "Modalidad jugador",
+    "playerMode": "Modalidad de jugador",
     "gameMode": "Modalidad de juego",
     "tournamentType": "Tipo de torneo",
     "sets": "Mesas por partida",
@@ -92,6 +95,13 @@
     "tournamentValue": "Valor del torneo",
     "tournamentValueDescription": "(ingresar valor en usd)",
     "tournamentCreated": "Torneo creado",
-    "tournamentSummary": "Resumen del torneo"
+    "tournamentSummary": "Resumen del torneo",
+    "single": "Eliminacion directa",
+    "double": "Doble eliminación",
+    "billar8": "Bola 8",
+    "billar9": "Bola 9",
+    "billar10": "Bola 10",
+    "individual": "Individual",
+    "team": "Grupo"
   }
 }

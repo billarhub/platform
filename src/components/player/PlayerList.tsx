@@ -10,7 +10,7 @@ interface PlayerListProps {
 
 const PlayerList: React.FC<PlayerListProps> = ({ players, handleGoToPage }) => {
   const [currentPage, setCurrentPage] = React.useState(1);
-  const playersPerPage = 10;
+  const playersPerPage = 200;
 
   const indexOfLastPlayer = currentPage * playersPerPage;
   const indexOfFirstPlayer = indexOfLastPlayer - playersPerPage;

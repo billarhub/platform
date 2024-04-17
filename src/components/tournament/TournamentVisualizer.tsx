@@ -6,6 +6,7 @@ import SpinnerIcon from '../icon/SpinnerIcon';
 import InputSubtitle from '../common/InputSubtitle';
 import SectionTab from '../common/SectionTab';
 import ArrowBackIcon from '../icon/ArrowBackIcon';
+import { useStartTournament } from '@/hooks/api/tournament';
 
 type TTabOption = {
   label: string;
@@ -13,10 +14,11 @@ type TTabOption = {
 };
 
 interface TournamentVisualizerProps {
-  goNext: () => void;
+  goNext?: () => void;
   summaryTitle?: string;
   isLoading: boolean;
   tournament: any;
+  handleNext?: boolean;
 }
 
 interface TabsProps {
@@ -27,14 +29,26 @@ interface TabsProps {
 
 function TournamentVisualizer({
   summaryTitle,
-  goNext,
+  goNext = () => {},
   children,
   isLoading,
   tournament,
+  handleNext,
 }: React.PropsWithChildren<TournamentVisualizerProps>) {
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
   const childrenArray = React.Children.toArray(children);
+  const { mutate: startTournament, isLoading: loadingStartTournament } =
+    useStartTournament(tournament._id);
+
+  const handleGoNext = async () => {
+    try {
+      await startTournament();
+      goNext();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="p-5 text-black w-full">
@@ -100,14 +114,14 @@ function TournamentVisualizer({
       {/* AQUI SE RENDERIZA EL CONTENIDO DE LA TAB SELECCIONADA */}
       {childrenArray[2]}
 
-      {goNext ? (
+      {handleNext ? (
         <div className="flex justify-end items-center w-full">
           <Button
             className="w-full lg:w-[200px]"
             type="button"
-            onClick={() => goNext()}
+            onClick={handleGoNext}
           >
-            {isLoading ? (
+            {isLoading || loadingStartTournament ? (
               <SpinnerIcon className="m-auto w-7 h-7 text-gray-200 animate-spin fill-primary-300" />
             ) : (
               commonTranslations('saveAndFollow')
@@ -122,7 +136,7 @@ function TournamentVisualizer({
 TournamentVisualizer.BackButton = function BackButton() {
   const router = useRouter();
   const goBack = () => {
-    router.push('/dashboard');
+    router.push('/tournaments');
   };
   return (
     <button

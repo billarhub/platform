@@ -9,6 +9,7 @@ import {
   useUpdateTournamentMatch,
 } from '@/hooks/api/tournament';
 import SpinnerIcon from '../icon/SpinnerIcon';
+import { useNotify } from '@/contexts/NotifyContext';
 
 interface TournamentScheduleProps {
   matches: any;
@@ -20,11 +21,13 @@ function TournamentSchedule({
   tournamentId,
 }: TournamentScheduleProps) {
   const t = useTranslations('Common');
+  const { notify } = useNotify();
 
   const {
     data: bracketData,
     isLoading: bracketLoading,
     isError: bracketError,
+    refetch: refetchBracket,
   } = useTournamentBracket(tournamentId || '');
 
   const {
@@ -75,6 +78,21 @@ function TournamentSchedule({
     });
   };
 
+  const handleSave = async (
+    matchId: string,
+    score1: number,
+    score2: number
+  ) => {
+    await updateMatch({
+      id: matchId,
+      playerOneScore: score1,
+      playerTwoScore: score2,
+    });
+    if (updateError) notify('Failed to update match score', 'error');
+    notify('Match score updated successfully', 'success');
+    refetchBracket();
+  };
+
   if (bracketLoading) {
     return (
       <div className="flex justify-center items-center h-[200px] w-full">
@@ -83,7 +101,7 @@ function TournamentSchedule({
     );
   }
 
-  if (bracketError || !bracketData || updateError) {
+  if (bracketError || !bracketData) {
     return <div className="text-black">Error loading bracket data</div>;
   }
 
@@ -175,11 +193,7 @@ function TournamentSchedule({
                               className="ml-2"
                               disabled={isUpdating}
                               onClick={() =>
-                                updateMatch({
-                                  id: match.id,
-                                  playerOneScore: score1,
-                                  playerTwoScore: score2,
-                                })
+                                handleSave(match.id, score1, score2)
                               }
                             >
                               Save

@@ -165,8 +165,9 @@ export function useTournamentBracket(tournamentId: string) {
     const isLoading = query.status === 'pending';
     const isError = query.status === 'error';
     const error = query.error;
+    const refetch = query.refetch;
 
-    return { ...query, isLoading, isError, error };
+    return { ...query, isLoading, isError, error, refetch };
 }
 
 export function useTournamentsPagination(currentPage: number, perPage: number) {

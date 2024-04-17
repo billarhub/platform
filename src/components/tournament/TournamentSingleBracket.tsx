@@ -40,18 +40,20 @@ const WhiteTheme = createTheme({
 interface ITournamentSingleBracketProps {
   locale: string;
   matches: any;
+  tournamentIdProp?: string;
 }
 
 function TournamentSingleBracket({
   locale,
   matches,
+  tournamentIdProp,
 }: ITournamentSingleBracketProps) {
   const commonTranslation = useTranslations('Common');
   const [width, height] = useWindowSize();
   const screenSize = useScreenSize();
   const finalWidth = Math.max(width - 500, screenSize === 'sm' ? 400 : 200);
   const finalHeight = Math.max(height - 50, 800);
-  const tournamentId = sessionStorage.getItem('currentTournamentId');
+  const tournamentId = sessionStorage.getItem('currentTournamentId') || tournamentIdProp;
 
   const handleEditBracket = () => {
     sessionStorage.setItem('selectedTournamentToEdit', tournamentId || '');

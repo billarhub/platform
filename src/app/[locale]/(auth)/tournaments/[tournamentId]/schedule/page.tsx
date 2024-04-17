@@ -2,8 +2,12 @@ import React from 'react';
 import { matches } from '@/static/matches';
 import TournamentSchedule from '@/components/tournament/TournamentSchedule';
 
-function TournamentSchedulePage() {
-  return <TournamentSchedule matches={matches} />;
+function TournamentSchedulePage({
+  params: { tournamentId, locale },
+}: {
+  params: { tournamentId: string; locale: string };
+}) {
+  return <TournamentSchedule matches={matches} tournamentId={tournamentId} />;
   //   return <div>TODO: Implement TournamentSchedulePage</div>;
 }
 

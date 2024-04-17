@@ -80,7 +80,7 @@ function TournamentDetail({
           <PlayerList players={tournament.players} handleGoToPage={() => {}} />
         );
       case 'bracket':
-        return <TournamentSingleBracket locale={locale} matches={matches} />;
+        return <TournamentSingleBracket locale={locale} matches={matches} tournamentIdProp={tournamentId} />;
       default:
         return null;
     }

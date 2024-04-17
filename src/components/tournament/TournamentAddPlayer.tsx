@@ -62,7 +62,6 @@ function TournamentAddPlayer({
       setPlayersQty(0);
     }
   }, [data]);
-  console.log('playersQty: ', playersQty);
   const { mutate } = useAddPlayerToTournament(token, tournamentId || '');
 
   const [key, setKey] = React.useState(0);
@@ -114,23 +113,23 @@ function TournamentAddPlayer({
       role: playerRoleId,
       email: selectedPlayer.email,
       phone: selectedPlayer.phone,
+      _id: selectedPlayer._id,
     };
-    console.log('newPlayer: ', newPlayer);
     setAddPlayerLoading(true);
-    // mutate(newPlayer, {
-    //   onSuccess: () => {
-    //     setPlayers([...players, newPlayer]);
-    //     reset({
-    //       userFromSelect: '',
-    //     });
-    //     setKey((prevKey) => prevKey + 1);
-    //     setAddPlayerLoading(false);
-    //   },
-    //   onError: (error) => {
-    //     console.error('Error adding player:', error);
-    //     setAddPlayerLoading(false);
-    //   },
-    // });
+    mutate(newPlayer, {
+      onSuccess: () => {
+        setPlayers([...players, newPlayer]);
+        reset({
+          userFromSelect: '',
+        });
+        setKey((prevKey) => prevKey + 1);
+        setAddPlayerLoading(false);
+      },
+      onError: (error) => {
+        console.error('Error adding player:', error);
+        setAddPlayerLoading(false);
+      },
+    });
   };
 
   const deleteAllPlayers = () => {

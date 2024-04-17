@@ -12,12 +12,19 @@ interface IPlayerSelectorProps {
 
 function PlayerSelector({ selectedPlayers, setValue }: IPlayerSelectorProps) {
   const { data, isLoading, isError } = useGetAllPlayers();
-
-  const players: OptionType[] =
-    data?.data?.data?.users?.map((user: any) => ({
-      label: `${user.firstname} ${user.lastname}`,
-      value: JSON.stringify(user),
-    })) || [];
+  const players: OptionType[] = React.useMemo(() => {
+    return (
+      data?.data?.data?.users
+        ?.filter(
+          (user: any) =>
+            !selectedPlayers.some((player: any) => player._id === user._id)
+        )
+        .map((user: any) => ({
+          label: `${user.firstname} ${user.lastname}`,
+          value: JSON.stringify(user),
+        })) || []
+    );
+  }, [data, selectedPlayers]);
 
   const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue('userFromSelect', e.target.value);
@@ -25,7 +32,7 @@ function PlayerSelector({ selectedPlayers, setValue }: IPlayerSelectorProps) {
 
   React.useEffect(() => {
     setValue('userFromSelect', players[0]?.value);
-  }, [players]);
+  }, [players, setValue, selectedPlayers]);
 
   return <Select options={players} onChange={onChange} />;
 }

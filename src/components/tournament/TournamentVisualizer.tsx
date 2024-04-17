@@ -14,7 +14,7 @@ type TTabOption = {
 };
 
 interface TournamentVisualizerProps {
-  goNext: () => void;
+  goNext?: () => void;
   summaryTitle?: string;
   isLoading: boolean;
   tournament: any;
@@ -29,7 +29,7 @@ interface TabsProps {
 
 function TournamentVisualizer({
   summaryTitle,
-  goNext,
+  goNext = () => {},
   children,
   isLoading,
   tournament,
@@ -38,7 +38,8 @@ function TournamentVisualizer({
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
   const childrenArray = React.Children.toArray(children);
-  const { mutate: startTournament, isLoading: loadingStartTournament } = useStartTournament(tournament._id);
+  const { mutate: startTournament, isLoading: loadingStartTournament } =
+    useStartTournament(tournament._id);
 
   const handleGoNext = async () => {
     try {
@@ -120,7 +121,7 @@ function TournamentVisualizer({
             type="button"
             onClick={handleGoNext}
           >
-            {isLoading || loadingStartTournament  ? (
+            {isLoading || loadingStartTournament ? (
               <SpinnerIcon className="m-auto w-7 h-7 text-gray-200 animate-spin fill-primary-300" />
             ) : (
               commonTranslations('saveAndFollow')
@@ -135,7 +136,7 @@ function TournamentVisualizer({
 TournamentVisualizer.BackButton = function BackButton() {
   const router = useRouter();
   const goBack = () => {
-    router.push('/dashboard');
+    router.push('/tournaments');
   };
   return (
     <button

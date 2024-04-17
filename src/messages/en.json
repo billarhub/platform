@@ -68,7 +68,8 @@
     "documentId": "Identity document",
     "actions": "Actions",
     "addExistingPlayer": "Add Existing Player",
-    "editBracket": "Edit Bracket"
+    "editBracket": "Edit Bracket",
+    "noMatches": "No matches"
   },
   "Tournament": {
     "title": "Tournament creator",

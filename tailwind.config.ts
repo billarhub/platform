@@ -25,7 +25,7 @@ const config: Config = {
         light: "",
         dark: '#313131',
         lightGray: {
-          100: '#F5F5F5',
+          100: '#ECECEC',
           200: '#E5E5E5',
           300: '#D9D9D9',
           400: '#CDCDCD',
@@ -52,6 +52,10 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'dashboardCardGradient': 'linear-gradient(180deg, #FF4E00 0%, #A53605 100%)',
         'mainBackground': "url('/image/main_background.webp')",
+      },
+      gridTemplateColumns: {
+        'fill-15':
+          'repeat(auto-fill, minmax(323px, auto))',
       },
     },
   },

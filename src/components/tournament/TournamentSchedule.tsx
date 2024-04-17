@@ -11,6 +11,10 @@ interface TournamentScheduleProps {
 
 function TournamentSchedule({ matches }: TournamentScheduleProps) {
   const t = useTranslations('Common');
+    const groupedMatches = matches.reduce((acc: any, match: any) => {
+    (acc[match.tournamentRoundText] = acc[match.tournamentRoundText] || []).push(match);
+    return acc;
+  }, {});
 
   return (
     <div className="mt-40 px-96 w-auto min-h-[1222px] bg-white flex flex-col justify-start items-center md:items-center">

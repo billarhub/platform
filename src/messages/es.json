@@ -68,7 +68,8 @@
     "documentId": "Documento de identidad",
     "actions": "Acciones",
     "addExistingPlayer": "Agregar jugador existente",
-    "editBracket": "Editar Bracket"
+    "editBracket": "Editar Bracket",
+    "noMatches": "No hay partidos"
   },
   "Tournament": {
     "title": "Creador de torneo",

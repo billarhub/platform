@@ -168,3 +168,31 @@ export function useTournamentBracket(tournamentId: string) {
 
     return { ...query, isLoading, isError, error };
 }
+
+export function useTournamentsPagination(currentPage: number, perPage: number) {
+    const query = useQuery({
+        queryKey: ['tournamentsPagination', currentPage, perPage],
+        queryFn: async () => {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_KEY}/tournament`, {
+                params: {
+                    currentPage,
+                    perPage
+                }
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.data;
+        },
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false
+    });
+
+    const isLoading = query.status === 'pending';
+    const isError = query.status === 'error';
+    const error = query.error;
+
+    return { ...query, isLoading, isError, error };
+}

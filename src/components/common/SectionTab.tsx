@@ -57,7 +57,7 @@ function SectionTab({
           >
             {option.label}
           </button>
-          {index < array.length - 1 && (
+          {index !== 0 && index < array.length - 1 && (
             <div className="flex justify-center items-center">
               <div className="border-r-[3px] h-5 w-px border-lightGray-400" />
             </div>

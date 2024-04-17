@@ -56,6 +56,14 @@ function TournamentSingleBracket({
   const handleEditBracket = () => {
     sessionStorage.setItem('selectedTournamentToEdit', tournamentId || '');
     sessionStorage.removeItem('currentTournamentId');
+  };
+
+  if (matches.length === 0) {
+    return (
+      <div className="flex justify-center items-center text-black">
+        {commonTranslation('noMatches')}
+      </div>
+    );
   }
 
   return (

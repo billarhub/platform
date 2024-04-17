@@ -67,7 +67,8 @@
     "active": "Activo",
     "documentId": "Documento de identidad",
     "actions": "Acciones",
-    "addExistingPlayer": "Agregar jugador existente"
+    "addExistingPlayer": "Agregar jugador existente",
+    "editBracket": "Editar Bracket"
   },
   "Tournament": {
     "title": "Creador de torneo",

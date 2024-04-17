@@ -2,6 +2,7 @@ export const matches = [
     {
       id: 260005,
       name: 'Final - Match',
+      pruebaField: 'prueba',
       nextMatchId: null,
       tournamentRoundText: '4',
       startTime: '2021-05-30',
@@ -17,7 +18,7 @@ export const matches = [
         {
           id: '9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '0',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Ant',
         },
@@ -27,7 +28,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '5',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -41,7 +42,7 @@ export const matches = [
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Doe',
         },
@@ -58,7 +59,7 @@ export const matches = [
         {
           id: 'd016cb2a-fdd9-4c40-a81f-0cc6bdf4b9cc',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Alice',
         },
@@ -73,7 +74,7 @@ export const matches = [
     },
     {
       id: 260008,
-      name: 'Quarter Final - Match 2',
+      name: 'Quarter Final - Match 1',
       nextMatchId: 260006,
       tournamentRoundText: '2',
       startTime: '2021-05-28',
@@ -89,7 +90,7 @@ export const matches = [
         {
           id: 'f9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'David',
         },
@@ -106,7 +107,7 @@ export const matches = [
         {
           id: 'g016cb2a-fdd9-4c40-a81f-0cc6bdf4b9cc',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Eve',
         },
@@ -123,7 +124,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '5',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -137,7 +138,7 @@ export const matches = [
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Doe',
         },
@@ -147,7 +148,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '5',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -161,7 +162,7 @@ export const matches = [
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Doe',
         },
@@ -171,7 +172,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '5',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -185,7 +186,7 @@ export const matches = [
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Doe',
         },
@@ -195,7 +196,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '5',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -209,7 +210,7 @@ export const matches = [
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Doe',
         },
@@ -219,7 +220,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '5',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -233,7 +234,7 @@ export const matches = [
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
           name: 'Doe',
         },
@@ -243,7 +244,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '4',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -252,14 +253,14 @@ export const matches = [
           resultText: '1',
           isWinner: false,
           status: null,
-          name: 'John',
+          name: 'Javier',
         },
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
-          name: 'Doe',
+          name: 'Moises',
         },
       ],
     },
@@ -267,7 +268,7 @@ export const matches = [
       id: 260006,
       name: 'Semi Final - Match',
       nextMatchId: 260005,
-      tournamentRoundText: '3',
+      tournamentRoundText: '4',
       startTime: '2021-05-29',
       state: 'DONE',
       participants: [
@@ -276,14 +277,14 @@ export const matches = [
           resultText: '1',
           isWinner: false,
           status: null,
-          name: 'John',
+          name: 'Moises',
         },
         {
           id: 'a9ea9ce1a-4794-4553-856c-9a3620c0531b',
           resultText: '3',
-          isWinner: true,
+          isWinner: false,
           status: null,
-          name: 'Doe',
+          name: 'Javier',
         },
       ],
     },

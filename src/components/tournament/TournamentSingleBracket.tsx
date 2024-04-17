@@ -8,8 +8,9 @@ import {
   Match as DefaultMatch,
 } from '@g-loot/react-tournament-brackets';
 import { useWindowSize } from '@/hooks/useWindowSize';
-import { matches } from '@/static/matches';
+// import { matches } from '@/static/matches';
 import useScreenSize from '@/hooks/useScreenSize';
+import { useTranslations } from 'next-intl';
 
 const CustomMatch = (props: any) => {
   return (
@@ -38,13 +39,24 @@ const WhiteTheme = createTheme({
 
 interface ITournamentSingleBracketProps {
   locale: string;
+  matches: any;
 }
 
-function TournamentSingleBracket({ locale }: ITournamentSingleBracketProps) {
+function TournamentSingleBracket({
+  locale,
+  matches,
+}: ITournamentSingleBracketProps) {
+  const commonTranslation = useTranslations('Common');
   const [width, height] = useWindowSize();
   const screenSize = useScreenSize();
   const finalWidth = Math.max(width - 500, screenSize === 'sm' ? 400 : 200);
   const finalHeight = Math.max(height - 50, 800);
+  const tournamentId = sessionStorage.getItem('currentTournamentId');
+
+  const handleEditBracket = () => {
+    sessionStorage.setItem('selectedTournamentToEdit', tournamentId || '');
+    sessionStorage.removeItem('currentTournamentId');
+  }
 
   return (
     <div
@@ -53,9 +65,10 @@ function TournamentSingleBracket({ locale }: ITournamentSingleBracketProps) {
       <div className="flex justify-end items-center w-full h-auto">
         <Link
           className="text-black underline"
-          href={`/${locale}/tournaments/661974fa275cced67cd75e61/schedule`}
+          href={`/${locale}/tournaments/${tournamentId}/schedule`}
+          onClick={handleEditBracket}
         >
-          Edit Schedule
+          {commonTranslation('editBracket')}
         </Link>
       </div>
       <SingleEliminationBracket

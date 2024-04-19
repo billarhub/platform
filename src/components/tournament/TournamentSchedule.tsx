@@ -5,6 +5,7 @@ import { Transition } from '@headlessui/react';
 import Accordion from '@/components/common/accordion/Accordion';
 import ChevronDownIcon from '@/components/icon/ChevronDownIcon';
 import {
+  useGetTournamentById,
   useTournamentBracket,
   useUpdateTournamentMatch,
 } from '@/hooks/api/tournament';
@@ -18,12 +19,14 @@ interface TournamentScheduleProps {
   matches: any;
   tournamentId?: string;
   locale: string;
+  token: string;
 }
 
 function TournamentSchedule({
   matches,
   tournamentId,
   locale,
+  token,
 }: TournamentScheduleProps) {
   const t = useTranslations('Common');
   const { notify } = useNotify();
@@ -35,6 +38,15 @@ function TournamentSchedule({
     isError: bracketError,
     refetch: refetchBracket,
   } = useTournamentBracket(tournamentId || '');
+
+  const { data, isLoading, isError } = useGetTournamentById(
+    token,
+    tournamentId || ''
+  );
+
+  const tournament = data?.data.data.tournament
+    ? data.data.data.tournament
+    : null;
 
   const {
     mutateAsync: updateMatch,
@@ -110,7 +122,14 @@ function TournamentSchedule({
     router.push(`/${locale}/tournaments/${tournamentId}`);
   };
 
-  if (bracketLoading) {
+  const getSetsPerRound = (round: string) => {
+    if (round.includes('Final')) {
+      return tournament.qtySetPerFinal;
+    }
+    return tournament.qtySetPerTable;
+  };
+
+  if (bracketLoading || isLoading) {
     return (
       <div className="flex justify-center items-center h-[200px] w-full">
         <SpinnerIcon className="m-auto w-16 h-16 text-primary-500 animate-spin fill-primary-300" />
@@ -118,8 +137,12 @@ function TournamentSchedule({
     );
   }
 
-  if (bracketError || !bracketData) {
-    return <div className="text-black">Error loading bracket data</div>;
+  if (bracketError || !bracketData || isError || !data) {
+    return (
+      <div className="flex justify-center items-center h-[200px] w-full ">
+        <div className="text-white">Error loading bracket data</div>
+      </div>
+    );
   }
 
   return (
@@ -196,6 +219,7 @@ function TournamentSchedule({
                             <input
                               type="number"
                               min="0"
+                              max={getSetsPerRound(round)}
                               value={score1}
                               className={`w-7 ${
                                 !participant2.isDummy && !participant1.isDummy
@@ -213,6 +237,7 @@ function TournamentSchedule({
                             <input
                               type="number"
                               min="0"
+                              max={getSetsPerRound(round)}
                               value={score2}
                               className={`w-7 ${
                                 !participant2.isDummy && !participant1.isDummy

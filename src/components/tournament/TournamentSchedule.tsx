@@ -162,8 +162,7 @@ function TournamentSchedule({
                 leaveTo="opacity-0 -translate-y-2"
               >
                 <Accordion.Panel className="flex flex-col flex-wrap pt-10 w-full">
-                  {matches.map((match: any, index: number, array: any[])=> {
-                    
+                  {matches.map((match: any, index: number, array: any[]) => {
                     if (match.participants.length === 0) {
                       return (
                         <div key={match.id} className="text-black">
@@ -182,11 +181,15 @@ function TournamentSchedule({
                     return (
                       <div
                         key={match.id}
-                        className={`flex justify-between items-center text-black gap-5 py-5 ${index !== array.length - 1 ? 'border-b border-lightGray-100' : ''}`}
+                        className={`flex justify-between items-center text-black gap-5 py-5 ${
+                          index !== array.length - 1
+                            ? 'border-b border-lightGray-100'
+                            : ''
+                        }`}
                       >
                         <div className="text-ellipsis overflow-hidden w-40 flex justify-between items-center">
                           {participant1.name}
-                          <div className='rounded-md w-5 h-5 bg-primary-500' />
+                          <div className="rounded-md w-5 h-5 bg-primary-500" />
                         </div>
                         {participant2 && (
                           <div className="flex justify-center items-center w-20">
@@ -194,7 +197,11 @@ function TournamentSchedule({
                               type="number"
                               min="0"
                               value={score1}
-                              className="w-7"
+                              className={`w-7 ${
+                                !participant2.isDummy && !participant1.isDummy
+                                  ? ''
+                                  : 'invisible'
+                              }`}
                               onChange={(e) =>
                                 handleScoreChange(
                                   match.id,
@@ -207,7 +214,11 @@ function TournamentSchedule({
                               type="number"
                               min="0"
                               value={score2}
-                              className="w-7"
+                              className={`w-7 ${
+                                !participant2.isDummy && !participant1.isDummy
+                                  ? ''
+                                  : 'invisible'
+                              }`}
                               onChange={(e) =>
                                 handleScoreChange(
                                   match.id,
@@ -222,17 +233,28 @@ function TournamentSchedule({
                         {participant2 && (
                           <>
                             <div className="text-ellipsis overflow-hidden w-40 flex justify-between items-center">
-                            <div className='rounded-md w-5 h-5 bg-[#1A1C20]' /> 
+                              <div className="rounded-md w-5 h-5 bg-[#1A1C20]" />
                               {participant2.name}
                             </div>
+
                             <button
-                              className="ml-2"
+                              className={`ml-2 ${
+                                !participant1.isDummy && !participant2.isDummy
+                                  ? ''
+                                  : 'invisible'
+                              }`}
                               disabled={isUpdating || match.finish}
                               onClick={() =>
                                 handleSave(match.id, score1, score2)
                               }
                             >
-                              <DiskIcon className={`w-4 h-4 ${match.finish ? "text-lightGray-100" : "text-lightGray-900"}`} />
+                              <DiskIcon
+                                className={`w-4 h-4 ${
+                                  match.finish
+                                    ? 'text-lightGray-100'
+                                    : 'text-lightGray-900'
+                                }`}
+                              />
                             </button>
                           </>
                         )}

@@ -7,8 +7,13 @@ function TournamentSchedulePage({
 }: {
   params: { tournamentId: string; locale: string };
 }) {
-  return <TournamentSchedule matches={matches} tournamentId={tournamentId} />;
-  //   return <div>TODO: Implement TournamentSchedulePage</div>;
+  return (
+    <TournamentSchedule
+      matches={matches}
+      tournamentId={tournamentId}
+      locale={locale}
+    />
+  );
 }
 
 export default TournamentSchedulePage;

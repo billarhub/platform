@@ -10,18 +10,24 @@ import {
 } from '@/hooks/api/tournament';
 import SpinnerIcon from '../icon/SpinnerIcon';
 import { useNotify } from '@/contexts/NotifyContext';
+import ArrowBackIcon from '../icon/ArrowBackIcon';
+import { useRouter } from 'next/navigation';
+import DiskIcon from '../icon/DiskIcon';
 
 interface TournamentScheduleProps {
   matches: any;
   tournamentId?: string;
+  locale: string;
 }
 
 function TournamentSchedule({
   matches,
   tournamentId,
+  locale,
 }: TournamentScheduleProps) {
   const t = useTranslations('Common');
   const { notify } = useNotify();
+  const router = useRouter();
 
   const {
     data: bracketData,
@@ -31,7 +37,7 @@ function TournamentSchedule({
   } = useTournamentBracket(tournamentId || '');
 
   const {
-    mutate: updateMatch,
+    mutateAsync: updateMatch,
     isLoading: isUpdating,
     isError: updateError,
   } = useUpdateTournamentMatch();
@@ -83,14 +89,25 @@ function TournamentSchedule({
     score1: number,
     score2: number
   ) => {
-    await updateMatch({
-      id: matchId,
-      playerOneScore: score1,
-      playerTwoScore: score2,
-    });
-    if (updateError) notify('Failed to update match score', 'error');
-    notify('Match score updated successfully', 'success');
-    refetchBracket();
+    try {
+      await updateMatch({
+        id: matchId,
+        playerOneScore: score1,
+        playerTwoScore: score2,
+      });
+
+      if (isUpdating) return;
+
+      await refetchBracket();
+      notify('Match score updated successfully', 'success');
+    } catch (error) {
+      notify('Failed to update match score', 'error');
+    }
+  };
+
+  const goBackToTournamentDetail = () => {
+    if (isUpdating) return;
+    router.push(`/${locale}/tournaments/${tournamentId}`);
   };
 
   if (bracketLoading) {
@@ -106,14 +123,23 @@ function TournamentSchedule({
   }
 
   return (
-    <div className="mt-40 px-60 w-auto min-h-[1222px] bg-white flex flex-col justify-start items-center md:items-center">
-      <div className="w-full flex justify-start items-center my-10">
+    <div className="mt-40 md:px-60 px-5 w-auto min-h-[1222px] bg-white flex flex-col justify-start items-center md:items-center">
+      <div className="w-full flex justify-stretch items-center my-10 gap-5">
+        {/* AQUI SE RENDERIZA EL BOTON DE REGRESO */}
+
+        <button
+          onClick={() => goBackToTournamentDetail()}
+          className="bg-black rounded-lg w-9 h-9 text-white flex justify-center items-center"
+        >
+          <ArrowBackIcon className="text-white w-7 h-7 font-bold" />
+        </button>
+
         <h1 className="text-3xl font-bold text-black uppercase">Schedule</h1>
       </div>
       {Object.entries(groupedMatches).map(([round, matches]) => (
         <Accordion
           key={round}
-          className="flex flex-col flex-wrap w-full bg-white mx-auto my-10 border-2 border-transparent border-b-primary-500"
+          className="flex flex-col flex-wrap w-full overflow-auto bg-white mx-auto my-10 border-2 border-transparent border-b-primary-500"
         >
           {({ open }) => (
             <>
@@ -136,7 +162,8 @@ function TournamentSchedule({
                 leaveTo="opacity-0 -translate-y-2"
               >
                 <Accordion.Panel className="flex flex-col flex-wrap pt-10 w-full">
-                  {matches.map((match: any) => {
+                  {matches.map((match: any, index: number, array: any[])=> {
+                    
                     if (match.participants.length === 0) {
                       return (
                         <div key={match.id} className="text-black">
@@ -155,31 +182,32 @@ function TournamentSchedule({
                     return (
                       <div
                         key={match.id}
-                        className="flex justify-between items-center text-black gap-5"
+                        className={`flex justify-between items-center text-black gap-5 py-5 ${index !== array.length - 1 ? 'border-b border-lightGray-100' : ''}`}
                       >
-                        <p>{participant1.name}</p>
+                        <div className="text-ellipsis overflow-hidden w-40 flex justify-between items-center">
+                          {participant1.name}
+                          <div className='rounded-md w-5 h-5 bg-primary-500' />
+                        </div>
                         {participant2 && (
-                          <input
-                            type="number"
-                            min="0"
-                            value={score1}
-                            className="w-10"
-                            onChange={(e) =>
-                              handleScoreChange(
-                                match.id,
-                                participant1.id,
-                                parseInt(e.target.value)
-                              )
-                            }
-                          />
-                        )}
-                        {participant2 && (
-                          <>
+                          <div className="flex justify-center items-center w-20">
+                            <input
+                              type="number"
+                              min="0"
+                              value={score1}
+                              className="w-7"
+                              onChange={(e) =>
+                                handleScoreChange(
+                                  match.id,
+                                  participant1.id,
+                                  parseInt(e.target.value)
+                                )
+                              }
+                            />
                             <input
                               type="number"
                               min="0"
                               value={score2}
-                              className="w-10"
+                              className="w-7"
                               onChange={(e) =>
                                 handleScoreChange(
                                   match.id,
@@ -188,15 +216,23 @@ function TournamentSchedule({
                                 )
                               }
                             />
-                            <p>{participant2.name}</p>
+                          </div>
+                        )}
+
+                        {participant2 && (
+                          <>
+                            <div className="text-ellipsis overflow-hidden w-40 flex justify-between items-center">
+                            <div className='rounded-md w-5 h-5 bg-[#1A1C20]' /> 
+                              {participant2.name}
+                            </div>
                             <button
                               className="ml-2"
-                              disabled={isUpdating}
+                              disabled={isUpdating || match.finish}
                               onClick={() =>
                                 handleSave(match.id, score1, score2)
                               }
                             >
-                              Save
+                              <DiskIcon className={`w-4 h-4 ${match.finish ? "text-lightGray-100" : "text-lightGray-900"}`} />
                             </button>
                           </>
                         )}

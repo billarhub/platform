@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import {
   SingleEliminationBracket,
-  Match,
   SVGViewer,
   createTheme,
   Match as DefaultMatch,
@@ -41,19 +40,22 @@ interface ITournamentSingleBracketProps {
   locale: string;
   matches: any;
   tournamentIdProp?: string;
+  isGuest?: boolean;
 }
 
 function TournamentSingleBracket({
   locale,
   matches,
   tournamentIdProp,
+  isGuest,
 }: ITournamentSingleBracketProps) {
   const commonTranslation = useTranslations('Common');
   const [width, height] = useWindowSize();
   const screenSize = useScreenSize();
   const finalWidth = Math.max(width - 500, screenSize === 'sm' ? 400 : 200);
   const finalHeight = Math.max(height - 50, 800);
-  const tournamentId = sessionStorage.getItem('currentTournamentId') || tournamentIdProp;
+  const tournamentId =
+    sessionStorage.getItem('currentTournamentId') || tournamentIdProp;
 
   const handleEditBracket = () => {
     sessionStorage.setItem('selectedTournamentToEdit', tournamentId || '');
@@ -72,15 +74,17 @@ function TournamentSingleBracket({
     <div
       className={`flex flex-col justify-center items-center w-full h-full round-header score gap-5`}
     >
-      <div className="flex justify-end items-center w-full h-auto">
-        <Link
-          className="text-black underline"
-          href={`/${locale}/tournaments/${tournamentId}/schedule`}
-          onClick={handleEditBracket}
-        >
-          {commonTranslation('editBracket')}
-        </Link>
-      </div>
+      {isGuest ? null : (
+        <div className="flex justify-end items-center w-full h-auto">
+          <Link
+            className="text-black underline"
+            href={`/${locale}/tournaments/${tournamentId}/schedule`}
+            onClick={handleEditBracket}
+          >
+            {commonTranslation('editBracket')}
+          </Link>
+        </div>
+      )}
       <SingleEliminationBracket
         matches={matches}
         matchComponent={CustomMatch}

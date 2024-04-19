@@ -70,6 +70,39 @@ function LoginForm({ locale }: ILoginFormProps) {
     }
   };
 
+  const handleGuestLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      let authToken;
+      let jwtDecoded;
+
+      const response = await signIn({
+        email: process.env.NEXT_PUBLIC_GUEST_EMAIL!.toLowerCase(),
+        password: process.env.NEXT_PUBLIC_GUEST_PASSWORD!,
+      });
+
+      authToken = response.data.token;
+
+      jwtDecoded = jwtDecode(authToken) as IDecodedJwt;
+
+      const userResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_KEY}/user/${jwtDecoded?.userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const user = await userResponse.json();
+      await createSession(authToken, user?.data?.data?.user);
+      router.push(`/${locale}/dashboard`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   isError && <p>{JSON.stringify(error)}</p>;
 
   return (
@@ -101,6 +134,15 @@ function LoginForm({ locale }: ILoginFormProps) {
             leftIcon={<PasswordIcon className="w-8 h-8 rounded-md" />}
             error={errors?.password?.message}
           />
+          <div className="flex justify-center md:justify-end items-center w-full">
+            <button
+              id="guest-button"
+              className="text-primary-300 text-sm underline"
+              onClick={handleGuestLogin}
+            >
+              {loginTranslation('guestLogin')}
+            </button>
+          </div>
           <Button
             type="submit"
             className="md:w-1/3 md:text-lg text-md rounded-3xl"

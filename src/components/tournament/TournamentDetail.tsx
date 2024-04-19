@@ -16,6 +16,7 @@ interface TournamentDetailProps {
   summaryTitle?: string;
   tournamentId: string;
   locale: string;
+  isGuest?: boolean;
 }
 
 function TournamentDetail({
@@ -24,6 +25,7 @@ function TournamentDetail({
   summaryTitle,
   tournamentId,
   locale,
+  isGuest = false,
 }: TournamentDetailProps) {
   const [selectedTab, setSelectedTab] = React.useState('players');
   const tournmaentTranslation = useTranslations('Tournament');
@@ -80,7 +82,14 @@ function TournamentDetail({
           <PlayerList players={tournament.players} handleGoToPage={() => {}} />
         );
       case 'bracket':
-        return <TournamentSingleBracket locale={locale} matches={matches} tournamentIdProp={tournamentId} />;
+        return (
+          <TournamentSingleBracket
+            locale={locale}
+            matches={matches}
+            tournamentIdProp={tournamentId}
+            isGuest={isGuest}
+          />
+        );
       default:
         return null;
     }

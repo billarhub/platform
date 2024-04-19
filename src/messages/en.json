@@ -35,7 +35,8 @@
     "email": "Email",
     "password": "Password",
     "submit": "Submit",
-    "register": "Don't have an account? Register"
+    "register": "Don't have an account? Register",
+    "guestLogin": "Log in as guest"
   },
   "Common": {
     "invalidEmail": "Please enter a valid email",

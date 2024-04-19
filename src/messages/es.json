@@ -35,7 +35,8 @@
     "email": "Correo electrónico",
     "password": "Contraseña",
     "submit": "Ingresar",
-    "register": "¿No tienes una cuenta? Regístrate"
+    "register": "¿No tienes una cuenta? Regístrate",
+    "guestLogin": "Ingresar como invitado"
   },
   "Common": {
     "invalidEmail": "Introduce un correo válido",

@@ -284,11 +284,7 @@ function TournamentAddPlayer({
           </Button>
         </div>
         <Button
-          className={`${
-            players.length < playersQty
-              ? 'bg-gray-300 hover:bg-gray-300 focus:bg-gray-300'
-              : ''
-          } w-full lg:w-auto`}
+          className={` w-full lg:w-auto`}
           type="button"
           // disabled={players.length < playersQty}
           onClick={onSubmit}

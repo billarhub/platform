@@ -159,7 +159,8 @@ export function useTournamentBracket(tournamentId: string) {
             return response.data;
         },
         refetchOnWindowFocus: false,
-        refetchOnReconnect: false
+        refetchOnReconnect: false,
+        refetchInterval: 10000
     });
 
     const isLoading = query.status === 'pending';

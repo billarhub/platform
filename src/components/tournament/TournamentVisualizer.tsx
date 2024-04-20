@@ -38,7 +38,7 @@ function TournamentVisualizer({
   const tournmaentTranslation = useTranslations('Tournament');
   const commonTranslations = useTranslations('Common');
   const childrenArray = React.Children.toArray(children);
-  const { mutate: startTournament, isLoading: loadingStartTournament } =
+  const { mutateAsync: startTournament, isLoading: loadingStartTournament } =
     useStartTournament(tournament._id);
 
   const handleGoNext = async () => {

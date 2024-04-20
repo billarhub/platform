@@ -290,7 +290,7 @@ function TournamentAddPlayer({
               : ''
           } w-full lg:w-auto`}
           type="button"
-          disabled={players.length < playersQty}
+          // disabled={players.length < playersQty}
           onClick={onSubmit}
         >
           {t('saveAndFollow')}
